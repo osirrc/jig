@@ -6,7 +6,8 @@ import docker
 
 
 def build_image():
-    base = client.containers.run("{}:{}".format(args.repo, args.tag), command="sh -c '/init; /index'", volumes=volumes, detach=True)
+    base = client.containers.run("{}:{}".format(args.repo, args.tag), command="sh -c '/init; /index {}'".format(args.collection_name), volumes=volumes,
+                                 detach=True)
     base.wait()
     base.commit(repository=args.repo, tag="save")
 
@@ -15,7 +16,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", required=True, type=str, help="the image repo (i.e., anserini)")
     parser.add_argument("--tag", required=True, type=str, help="the image tag (i.e., latest)")
-    parser.add_argument("--collection", required=True, type=str, help="the path of the collection on the host")
+    parser.add_argument("--collection_name", required=True, type=str, help="the name of the collection")
+    parser.add_argument("--collection_path", required=True, type=str, help="the path of the collection on the host")
     parser.add_argument("--output", required=True, type=str, help="the output directory for run files on the host")
     parser.add_argument("--qrels", required=True, type=str, help="the qrels file for evaluation")
     parser.add_argument("--build", default=False, type=bool, help="whether we re-build the image from scratch")
@@ -27,8 +29,8 @@ if __name__ == "__main__":
     client = docker.from_env()
 
     volumes = {
-        args.collection: {
-            "bind": "/input",
+        args.collection_path: {
+            "bind": "/input/collections/{}".format(args.collection_name),
             "mode": "ro"
         },
         args.output: {
@@ -52,3 +54,4 @@ if __name__ == "__main__":
         run = os.path.join(args.output, file)
         print("-> {}".format(run))
         subprocess.run(["trec_eval/trec_eval", "-m", "map", "-m", "P.30", args.qrels, run])
+        print()

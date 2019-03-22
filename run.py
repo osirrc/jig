@@ -54,7 +54,7 @@ if __name__ == "__main__":
     exists = len(client.images.list(filters={"reference": "{}:{}".format(args.repo, "save")}))
 
     if not exists or args.build:
-        print("Not existing image found, building image...")
+        print("No existing image found, building image...")
         build_image()
 
     print("Starting container from existing image...")

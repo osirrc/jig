@@ -1,6 +1,6 @@
 # OSIRRC 2019 Jig
 
-What's a [jig](https://en.wikipedia.org/wiki/Jig_(tool)?
+What's a [jig](https://en.wikipedia.org/wiki/Jig_(tool))?
 
 Run the `init.sh` script to download + compile `trec_eval` and download the appropriate topics + qrels.
 

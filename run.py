@@ -26,6 +26,9 @@ def prepare():
     `/input/collection/collection_name`, where the container can
     expect the document collection to be mounted.
     """
+
+    print("Preparing image...")
+
     volumes = {
         args.collection_path: {
             "bind": os.path.join(COLLECTION_PATH_GUEST, args.collection_name),

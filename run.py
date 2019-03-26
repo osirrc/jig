@@ -51,7 +51,7 @@ def search():
     """
     Runs the search and evaluates the results (run files placed into the /output directory) using trec_eval
     """
-    exists = len(client.images.list(filters={"reference": "{}:{}".format(args.repo, "save")}))
+    exists = len(client.images.list(filters={"reference": "{}:{}".format(args.repo, "save")})) != 0
     if not exists:
         sys.exit("Must prepare image first...")
 

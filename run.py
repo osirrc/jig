@@ -29,12 +29,20 @@ def prepare():
 
     print("Preparing image...")
 
-    volumes = {
-        args.collection_path: {
-            "bind": os.path.join(COLLECTION_PATH_GUEST, args.collection_name),
+    # Mapping from collection name to path on host
+    name_to_path_host = dict(map(lambda x: x.split("="), args.collections))
+
+    # Mapping from collection name to path in container
+    name_to_path_guest = dict(map(lambda name: (name, os.path.join(COLLECTION_PATH_GUEST, name)), name_to_path_host.keys()))
+
+    volumes = {}
+
+    for name in name_to_path_host.keys():
+        path_host, path_guest = name_to_path_host[name], name_to_path_guest[name]
+        volumes[path_host] = {
+            "bind": path_guest,
             "mode": "ro"
         }
-    }
 
     # The first step is to pull an image from an OSIRRC participant,
     # start up a container, run its `init` and `index` hooks, and then
@@ -42,8 +50,14 @@ def prepare():
     # built. The rationale for doing this is that indexing may take a
     # while, but only needs to be done once, so in essence we are
     # "snapshotting" the system with the indexes.
-    base = client.containers.run("{}:{}".format(args.repo, args.tag), command="sh -c '/init; /index {}'".format(args.collection_name), volumes=volumes, detach=True)
+    base = client.containers.run("{}:{}".format(args.repo, args.tag),
+                                 command="sh -c '/init; /index --collections {}'".format(" ".join(name_to_path_host.keys())),
+                                 volumes=volumes, detach=True)
+
+    print("Waiting for init and index to finish...")
     base.wait()
+
+    print("Committing image...")
     base.commit(repository=args.repo, tag="save")
 
 
@@ -67,7 +81,11 @@ def search():
     }
 
     print("Starting container from saved image...")
-    container = client.containers.run("{}:{}".format(args.repo, "save"), command="sh -c '/search {} {}'".format(args.topic, args.topic_format), volumes=volumes, detach=True)
+    container = client.containers.run("{}:{}".format(args.repo, "save"),
+                                      command="sh -c '/search --collection {} --topic {} --topic_format {}'".format(
+                                          args.collection, args.topic, args.topic_format), volumes=volumes, detach=True)
+
+    print("Waiting for search to finish...")
     container.wait()
 
     print("Evaluating results using trec_eval...")
@@ -87,15 +105,15 @@ if __name__ == "__main__":
     parser_prepare.set_defaults(run=prepare)
     parser_prepare.add_argument("--repo", required=True, type=str, help="the image repo (i.e., rclancy/anserini-test)")
     parser_prepare.add_argument("--tag", required=True, type=str, help="the image tag (i.e., latest)")
-    parser_prepare.add_argument("--collection_name", required=True, type=str, help="the name of the collection")
-    parser_prepare.add_argument("--collection_path", required=True, type=str, help="the path of the collection on the host")
+    parser_prepare.add_argument("--collections", required=True, nargs="+", help="the name of the collection")
 
     # Specific to search
     parser_search = parser_sub.add_parser("search")
     parser_search.set_defaults(run=search)
     parser_search.add_argument("--repo", required=True, type=str, help="the image repo (i.e., rclancy/anserini-test)")
+    parser_search.add_argument("--collection", required=True, help="the name of the collection")
     parser_search.add_argument("--topic", required=True, type=str, help="the topic file for search")
-    parser_search.add_argument("--topic_format", default="TREC", type=str, help="the topic file for search")
+    parser_search.add_argument("--topic_format", default="TREC", type=str, help="the topic file format for search")
     parser_search.add_argument("--output", required=True, type=str, help="the output directory for run files on the host")
     parser_search.add_argument("--qrels", required=True, type=str, help="the qrels file for evaluation")
 
@@ -103,7 +121,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Create Docker client
-    client = docker.from_env()
+    client = docker.from_env(timeout=86_400)
 
     # Call the function specified in the set_defaults call for the parser.
     args.run()

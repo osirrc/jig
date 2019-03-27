@@ -9,7 +9,7 @@ To test the jig with an Anserini image, try:
 ```
 python run.py prepare \
     --repo rclancy/anserini-test --tag latest \
-    --collection_name robust04 --collection_path /path/to/disk45
+    --collections [name]=[path] [name]=[path] ...
 ```
 
 then
@@ -17,12 +17,13 @@ then
 ```
 python run.py search \
     --repo rclancy/anserini-test \
-    --topic topics.robust04.301-450.601-700.txt --output /path/to/output \
+    --collection [name] \
+    --output /path/to/output \
     --qrels $(pwd)/qrels/qrels.robust2004.txt
 ```
 
 Change:
- - `/path/to/disk45/` to the location of the collection
+ - `[name]` and `[path]` to the collection name and path on the host, respectively
  - `/path/to/output` to the desired output directory.
  
 The output run files will appear in the argument of `--output`.

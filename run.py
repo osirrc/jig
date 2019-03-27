@@ -29,12 +29,19 @@ def prepare():
 
     print("Preparing image...")
 
-    volumes = {
-        args.collection_path: {
-            "bind": os.path.join(COLLECTION_PATH_GUEST, args.collection_name),
+    collection_names = args.collection_name.split(",")
+    collection_paths = args.collection_path.split(",")
+
+    if len(collection_names) != len(collection_paths):
+        sys.exit("Must have same number of collection names as paths")
+
+    volumes = {}
+
+    for (name, path) in zip(collection_names, collection_paths):
+        volumes[path] = {
+            "bind": os.path.join(COLLECTION_PATH_GUEST, name),
             "mode": "ro"
         }
-    }
 
     # The first step is to pull an image from an OSIRRC participant,
     # start up a container, run its `init` and `index` hooks, and then

@@ -111,7 +111,7 @@ if __name__ == "__main__":
     parser_search = parser_sub.add_parser("search")
     parser_search.set_defaults(run=search)
     parser_search.add_argument("--repo", required=True, type=str, help="the image repo (i.e., rclancy/anserini-test)")
-    parser_search.add_argument("--collection", required=True, nargs="+", help="the name of the collection")
+    parser_search.add_argument("--collection", required=True, help="the name of the collection")
     parser_search.add_argument("--topic", required=True, type=str, help="the topic file for search")
     parser_search.add_argument("--topic_format", default="TREC", type=str, help="the topic file format for search")
     parser_search.add_argument("--output", required=True, type=str, help="the output directory for run files on the host")

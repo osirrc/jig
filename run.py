@@ -50,7 +50,9 @@ def prepare():
     # built. The rationale for doing this is that indexing may take a
     # while, but only needs to be done once, so in essence we are
     # "snapshotting" the system with the indexes.
-    base = client.containers.run("{}:{}".format(args.repo, args.tag), command="sh -c '/init; /index --collections {}'".format(" ".join(name_to_path_host.keys())), volumes=volumes, detach=True)
+    base = client.containers.run("{}:{}".format(args.repo, args.tag),
+                                 command="sh -c '/init; /index --collections {}'".format(" ".join(name_to_path_host.keys())),
+                                 volumes=volumes, detach=True)
 
     print("Waiting for init and index to finish...")
     base.wait()
@@ -79,7 +81,9 @@ def search():
     }
 
     print("Starting container from saved image...")
-    container = client.containers.run("{}:{}".format(args.repo, "save"), command="sh -c '/search --collection {} --topic {} --topic_format {}'".format(args.collection, args.topic, args.topic_format), volumes=volumes, detach=True)
+    container = client.containers.run("{}:{}".format(args.repo, "save"),
+                                      command="sh -c '/search --collection {} --topic {} --topic_format {}'".format(
+                                          args.collection, args.topic, args.topic_format), volumes=volumes, detach=True)
 
     print("Waiting for search to finish...")
     container.wait()

@@ -101,7 +101,7 @@ if __name__ == "__main__":
     parser_prepare.set_defaults(run=prepare)
     parser_prepare.add_argument("--repo", required=True, type=str, help="the image repo (i.e., rclancy/anserini-test)")
     parser_prepare.add_argument("--tag", required=True, type=str, help="the image tag (i.e., latest)")
-    parser_prepare.add_argument("--collections", required=True, nargs="*", help="the name of the collection")
+    parser_prepare.add_argument("--collections", required=True, nargs="+", help="the name of the collection")
 
     # Specific to search
     parser_search = parser_sub.add_parser("search")

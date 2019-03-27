@@ -49,7 +49,7 @@ def prepare():
     # built. The rationale for doing this is that indexing may take a
     # while, but only needs to be done once, so in essence we are
     # "snapshotting" the system with the indexes.
-    base = client.containers.run("{}:{}".format(args.repo, args.tag), command="sh -c '/init; /index {}'".format(args.collection_name), volumes=volumes, detach=True)
+    base = client.containers.run("{}:{}".format(args.repo, args.tag), command="sh -c '/init; /index --collection_name {}'".format(args.collection_name), volumes=volumes, detach=True)
     base.wait()
     base.commit(repository=args.repo, tag="save")
 
@@ -74,7 +74,7 @@ def search():
     }
 
     print("Starting container from saved image...")
-    container = client.containers.run("{}:{}".format(args.repo, "save"), command="sh -c '/search {} {}'".format(args.topic, args.topic_format), volumes=volumes, detach=True)
+    container = client.containers.run("{}:{}".format(args.repo, "save"), command="sh -c '/search --collection_name {} --topic {} --topic_format {}'".format(args.collection_name, args.topic, args.topic_format), volumes=volumes, detach=True)
     container.wait()
 
     print("Evaluating results using trec_eval...")
@@ -101,6 +101,7 @@ if __name__ == "__main__":
     parser_search = parser_sub.add_parser("search")
     parser_search.set_defaults(run=search)
     parser_search.add_argument("--repo", required=True, type=str, help="the image repo (i.e., rclancy/anserini-test)")
+    parser_search.add_argument("--collection_name", required=True, type=str, help="the name of the collection")
     parser_search.add_argument("--topic", required=True, type=str, help="the topic file for search")
     parser_search.add_argument("--topic_format", default="TREC", type=str, help="the topic file for search")
     parser_search.add_argument("--output", required=True, type=str, help="the output directory for run files on the host")

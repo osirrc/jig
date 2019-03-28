@@ -27,3 +27,8 @@ Change:
  
 The output run files will appear in the argument of `--output`.
 Note that all paths have to be absolute (while `topic` is just the name of the file from the `topics` dir).
+
+## Reference Images
+
++ Anserini: [[code](https://github.com/osirrc2019/anserini-docker)] [[Docker Hub](https://hub.docker.com/r/rclancy/anserini-test)]
++ Terrier: [[code](https://github.com/osirrc2019/terrier-docker)]

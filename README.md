@@ -28,3 +28,30 @@ Change:
  
 The output run files will appear in the argument of `--output`.
 Note that all paths have to be absolute (while `topic` is just the name of the file from the `topics` dir).
+
+# Docker Container Contract
+
+Currently we support three hooks: `init`, `index`, and `search` (called in that order). We expect these three executables to be located in the root directory of the container.
+
+Each script is executed with the interpreter determined by the shebang so you can use  `#!/usr/bin/env bash`, `#!/usr/bin/env python3`, etc - just remember to make sure your `Dockerfile` is built with the appropriate base image or the required dependencies installed. 
+
+### init
+The purpose of the `init` hook is to do any preperation needed for the run - this could be downloading + compiling code, downloading a pre-built artifact, or downloading external resources (pre-trained models, knowledge graphs, etc.).
+
+The script will be executed as `./init` with no arguments.
+
+### index
+The purpose of the `index` hook is to build the indexes required for the run.
+
+Before the hook is run, we will mount the appropriate document collections at `/input/collections/<name>`, so your script should expect the appropriate collections to be mounted there.
+
+The script will be executed as: `./index --collections <name> <name> ...` where...
+- `--collections` is a space-delimited list of index names that maps into `/input/collections/<name>`
+
+### search
+The purpose of the `search` hook is to perform the ad-hoc retreival runs.
+
+The script will be executed as `./search --collection <name> --topic <topic> --topic_format <topic_format>` where...
+- `--collection <name>` is the name of the collection being run on (same as the `index` script, so you can map back to the location you chose to store the index)
+- `--topic <topic>` is the topic file that maps to `/input/topics/<topic>` 
+- `--topic_format <topic_format>` is the format of the topic file

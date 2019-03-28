@@ -46,10 +46,12 @@ The purpose of the `index` hook is to build the indexes required for the run.
 Before the hook is run, we will mount the appropriate document collections at `/input/collections/<name>`, so your script should expect the appropriate collections to be mounted there.
 
 The script will be executed as: `./index --collections <name> <name> ...` where...
-- `--collections` is a space-delimited list of index names that maps into `/input/collections/<name>`
+- `--collections <name> <name> ...` is a space-delimited list of collection names that map into `/input/collections/<name>`
 
 ### search
 The purpose of the `search` hook is to perform the ad-hoc retreival runs.
+
+The run files are expected to be placed in the `/output` directory such that they can be evaluated externally by `jig` using `trec_eval`.
 
 The script will be executed as `./search --collection <name> --topic <topic> --topic_format <topic_format>` where...
 - `--collection <name>` is the name of the collection being run on (same as the `index` script, so you can map back to the location you chose to store the index)

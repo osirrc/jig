@@ -1,14 +1,16 @@
-import subprocess
 import os
+import subprocess
+import sys
+
 
 class Searcher:
 
     def __init__(self, searcher_config=None):
         self.config = searcher_config
-    
+
     def set_config(self, searcher_config):
         self.config = searcher_config
-    
+
     def search(self, client, output_path_guest, topic_path_host, topic_path_guest):
         """
         Runs the search and evaluates the results (run files placed into the /output directory) using trec_eval
@@ -30,8 +32,8 @@ class Searcher:
 
         print("Starting container from saved image...")
         container = client.containers.run("{}:{}".format(self.config.repo, "save"),
-                                        command="sh -c '/search --collection {} --topic {} --topic_format {}'".format(
-                                            self.config.collection, self.config.topic, self.config.topic_format), volumes=volumes, detach=True)
+                                          command="sh -c '/search --collection {} --topic {} --topic_format {}'".format(
+                                              self.config.collection, self.config.topic, self.config.topic_format), volumes=volumes, detach=True)
 
         print("Waiting for search to finish...")
         container.wait()

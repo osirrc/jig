@@ -1,12 +1,6 @@
 import argparse
-import os
-import subprocess
-import sys
-
-import docker
 
 from manager import Manager
-
 
 if __name__ == "__main__":
     manager = Manager()

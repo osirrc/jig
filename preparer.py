@@ -1,13 +1,14 @@
 import os
 
+
 class Preparer:
 
     def __init__(self, preparer_config=None):
         self.config = preparer_config
-    
+
     def set_config(self, preparer_config):
         self.config = preparer_config
-    
+
     def prepare(self, client, collection_path_guest):
         """
         Builds an image that has been initialized and has indexed the collection.
@@ -48,8 +49,8 @@ class Preparer:
         # while, but only needs to be done once, so in essence we are
         # "snapshotting" the system with the indexes.
         base = client.containers.run("{}:{}".format(self.config.repo, self.config.tag),
-                                    command="sh -c '/init; /index --collections {}'".format(" ".join(name_to_path_host.keys())),
-                                    volumes=volumes, detach=True)
+                                     command="sh -c '/init; /index --collections {}'".format(" ".join(name_to_path_host.keys())),
+                                     volumes=volumes, detach=True)
 
         print("Waiting for init and index to finish...")
         base.wait()

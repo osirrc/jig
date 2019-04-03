@@ -18,6 +18,7 @@ then
 python run.py search \
     --repo rclancy/anserini-test \
     --collection [name] \
+    --topic [topic_file_name] \
     --output /path/to/output \
     --qrels $(pwd)/qrels/qrels.robust2004.txt
 ```

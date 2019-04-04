@@ -58,3 +58,12 @@ The script will be executed as `./search --collection <name> --topic <topic> --t
 - `--collection <name>` is the name of the collection being run on (same as the `index` script, so you can map back to the location you chose to store the index)
 - `--topic <topic>` is the topic file that maps to `/input/topics/<topic>` 
 - `--topic_format <topic_format>` is the format of the topic file
+
+## Reference Images
+
++ Anserini: [[code](https://github.com/osirrc2019/anserini-docker)] [[Docker Hub](https://hub.docker.com/r/rclancy/anserini-test)]
++ Terrier: [[code](https://github.com/osirrc2019/terrier-docker)]
+
+## Notes
+
+Python 3.5 or higher is required to run `jig`.

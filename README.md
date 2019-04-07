@@ -17,6 +17,7 @@ then
 ```
 python run.py search \
     --repo rclancy/anserini-test \
+    --tag latest \
     --collection [name] \
     --topic [topic_file_name] \
     --output /path/to/output \

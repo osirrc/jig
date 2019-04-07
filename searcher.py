@@ -11,11 +11,13 @@ class Searcher:
     def set_config(self, searcher_config):
         self.config = searcher_config
 
-    def search(self, client, output_path_guest, topic_path_host, topic_path_guest):
+    def search(self, client, output_path_guest, topic_path_host, topic_path_guest, generate_save_tag):
         """
         Runs the search and evaluates the results (run files placed into the /output directory) using trec_eval
         """
-        exists = len(client.images.list(filters={"reference": "{}:{}".format(self.config.repo, "save")})) != 0
+        save_tag = generate_save_tag(self.config.tag)
+
+        exists = len(client.images.list(filters={"reference": "{}:{}".format(self.config.repo, save_tag)})) != 0
         if not exists:
             sys.exit("Must prepare image first...")
 
@@ -31,7 +33,7 @@ class Searcher:
         }
 
         print("Starting container from saved image...")
-        container = client.containers.run("{}:{}".format(self.config.repo, "save"),
+        container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
                                           command="sh -c '/search --collection {} --topic {} --topic_format {}'".format(
                                               self.config.collection, self.config.topic, self.config.topic_format), volumes=volumes, detach=True)
 

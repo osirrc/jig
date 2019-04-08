@@ -20,12 +20,14 @@ python run.py search \
     --tag latest \
     --collection [name] \
     --topic [topic_file_name] \
+    --top_k [num] \
     --output /path/to/output \
     --qrels $(pwd)/qrels/qrels.robust2004.txt
 ```
 
 Change:
  - `[name]` and `[path]` to the collection name and path on the host, respectively
+ - `[num]` for `top-k` retrieval (default of `1000` if omitted)
  - `/path/to/output` to the desired output directory.
  
 The output run files will appear in the argument of `--output`.

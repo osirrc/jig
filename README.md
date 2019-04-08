@@ -57,10 +57,11 @@ The purpose of the `search` hook is to perform the ad-hoc retreival runs.
 
 The run files are expected to be placed in the `/output` directory such that they can be evaluated externally by `jig` using `trec_eval`.
 
-The script will be executed as `./search --collection <name> --topic <topic> --topic_format <topic_format>` where...
+The script will be executed as `./search --collection <name> --topic <topic> --topic_format <topic_format> --top_k <num>` where...
 - `--collection <name>` is the name of the collection being run on (same as the `index` script, so you can map back to the location you chose to store the index)
 - `--topic <topic>` is the topic file that maps to `/input/topics/<topic>` 
 - `--topic_format <topic_format>` is the format of the topic file
+- `--top_k <num>` is the number of retrieval results for top-k runs
 
 ## Reference Images
 

@@ -22,6 +22,7 @@ if __name__ == "__main__":
     parser_search.add_argument("--collection", required=True, help="the name of the collection")
     parser_search.add_argument("--topic", required=True, type=str, help="the topic file for search")
     parser_search.add_argument("--topic_format", default="TREC", type=str, help="the topic file format for search")
+    parser_search.add_argument("--top_k", default=1000, type=int, help="the number of results for top-k retrieval")
     parser_search.add_argument("--output", required=True, type=str, help="the output directory for run files on the host")
     parser_search.add_argument("--qrels", required=True, type=str, help="the qrels file for evaluation")
 

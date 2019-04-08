@@ -32,8 +32,8 @@ class Searcher:
 
         print("Starting container from saved image...")
         container = client.containers.run("{}:{}".format(self.config.repo, "save"),
-                                          command="sh -c '/search --collection {} --topic {} --topic_format {}'".format(
-                                              self.config.collection, self.config.topic, self.config.topic_format), volumes=volumes, detach=True)
+                                          command="sh -c '/search --collection {} --topic {} --topic_format {} --top_k {}'".format(
+                                              self.config.collection, self.config.topic, self.config.topic_format, self.config.top_k), volumes=volumes, detach=True)
 
         print("Waiting for search to finish...")
         container.wait()

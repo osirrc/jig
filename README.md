@@ -63,6 +63,7 @@ The script will be executed as `./search --collection <name> --topic <topic> --t
 
 + Anserini: [[code](https://github.com/osirrc2019/anserini-docker)] [[Docker Hub](https://hub.docker.com/r/rclancy/anserini-test)]
 + Terrier: [[code](https://github.com/osirrc2019/terrier-docker)]
++ PISA: [[code](https://github.com/osirrc2019/pisa-docker)] [[Docker Hub](https://hub.docker.com/r/pisa/pisa-osirrc2019)]
 
 ## Notes
 

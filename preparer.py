@@ -56,4 +56,4 @@ class Preparer:
         base.wait()
 
         print("Committing image...")
-        base.commit(repository=self.config.repo, tag=generate_save_tag(self.config.tag))
+        base.commit(repository=self.config.repo, tag=generate_save_tag(self.config.tag, self.config.save_id))

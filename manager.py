@@ -19,7 +19,7 @@ class Manager:
         self.client = docker.from_env(timeout=86_400)
         self.preparer = Preparer()
         self.searcher = Searcher()
-        self.generate_save_tag = lambda tag, save_tag: hashlib.sha256((tag + save_tag).encode()).hexdigest()
+        self.generate_save_tag = lambda tag, save_id: hashlib.sha256((tag + save_id).encode()).hexdigest()
 
     def set_preparer_config(self, preparer_config):
         self.preparer.set_config(preparer_config)

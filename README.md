@@ -8,7 +8,9 @@ To test the jig with an Anserini image, try:
 
 ```
 python run.py prepare \
-    --repo rclancy/anserini-test --tag latest \
+    --repo rclancy/anserini-test \
+    --tag latest \
+    --save_tag [tag] \
     --collections [name]=[path] [name]=[path] ...
 ```
 
@@ -18,6 +20,7 @@ then
 python run.py search \
     --repo rclancy/anserini-test \
     --tag latest \
+    --save_tag [tag] \
     --collection [name] \
     --topic [topic_file_name] \
     --top_k [num] \

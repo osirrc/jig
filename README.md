@@ -33,6 +33,7 @@ Change:
  
 The output run files will appear in the argument of `--output`.
 Note that all paths have to be absolute (while `topic` is just the name of the file from the `topics` dir).
+The full command line parameters are below.
 
 ## Command Line Options
 

@@ -8,33 +8,62 @@ To test the jig with an Anserini image, try:
 
 ```
 python run.py prepare \
-    --repo rclancy/anserini-test \
+    --repo osirrc2019/anserini \
     --tag latest \
-    --save_tag [tag] \
-    --collections [name]=[path] [name]=[path] ...
+    --collections [name]=[path] ...
 ```
 
 then
 
 ```
 python run.py search \
-    --repo rclancy/anserini-test \
+    --repo osirrc2019/anserini \
     --tag latest \
-    --save_tag [tag] \
     --collection [name] \
     --topic [topic_file_name] \
-    --top_k [num] \
     --output /path/to/output \
-    --qrels $(pwd)/qrels/qrels.robust2004.txt
+    --qrels $(pwd)/qrels/[qrels]
 ```
 
 Change:
  - `[name]` and `[path]` to the collection name and path on the host, respectively
- - `[num]` for `top-k` retrieval (default of `1000` if omitted)
+ - `[topic_file_name]` to the name of the topic file
  - `/path/to/output` to the desired output directory.
+ - `[qrels]` to the appropriate qrels file
  
 The output run files will appear in the argument of `--output`.
 Note that all paths have to be absolute (while `topic` is just the name of the file from the `topics` dir).
+The full command line parameters are below.
+
+## Command Line Options
+
+Options with `none` as the default are required.
+
+### Command Line Options - prepare
+
+`python run.py prepare <options>`
+
+| Option Name | Type | Default | Example | Description
+| --- | --- | --- | --- | ---
+| `--repo` | `string` | `none` | `--repo osirrc2019/anserini` | the repo on Docker Hub
+| `--tag` | `string` | `none` | `--latest` | the tag on Docker Hub
+| `--collections` | `[name]=[path] ...` | `none` | `--collections robust04=/path/to/robust04 ...` | the collections to index
+| `--save_id` | `string` | `save` | `--save_id robust04-exp1` | the ID for intermediate image after indexing
+
+### Command Line Options - search
+
+`python run.py search <options>`
+
+| Option Name | Type | Default | Example | Description
+| --- | --- | --- | --- | ---
+| `--repo` | `string` | `none` | `--repo osirrc2019/anserini` | the repo on Docker Hub
+| `--tag` | `string` | `none` | `--latest` | the tag on Docker Hub
+| `--collection` | `string` | `none` | `--collection robust04` | the collections to index
+| `--save_id` | `string` | `save` | `--save_id robust04-exp1` | the ID of the intermediate image
+| `--topic` | `string` | `none` | `--topic topics.robust04.301-450.601-700.txt` | the name (not path) of the topic file
+| `--top_k` | `int` | `1000` | `--top_k 500` | the number of results for top-k retrieval
+| `--output` | `string` | `none` | `--output $(pwd)/output` | the output path for run files
+| `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
 
 # Docker Container Contract
 

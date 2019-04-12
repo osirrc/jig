@@ -9,7 +9,7 @@ class Preparer:
     def set_config(self, preparer_config):
         self.config = preparer_config
 
-    def prepare(self, client, collection_path_guest):
+    def prepare(self, client, collection_path_guest, generate_save_tag):
         """
         Builds an image that has been initialized and has indexed the collection.
 
@@ -56,4 +56,4 @@ class Preparer:
         base.wait()
 
         print("Committing image...")
-        base.commit(repository=self.config.repo, tag="save")
+        base.commit(repository=self.config.repo, tag=generate_save_tag(self.config.tag, self.config.save_id))

@@ -1,4 +1,5 @@
 import os
+import hashlib
 
 import docker
 
@@ -18,6 +19,7 @@ class Manager:
         self.client = docker.from_env(timeout=86_400)
         self.preparer = Preparer()
         self.searcher = Searcher()
+        self.generate_save_tag = lambda tag, save_id: hashlib.sha256((tag + save_id).encode()).hexdigest()
 
     def set_preparer_config(self, preparer_config):
         self.preparer.set_config(preparer_config)
@@ -28,9 +30,9 @@ class Manager:
     def prepare(self, preparer_config=None):
         if preparer_config:
             self.set_preparer_config(preparer_config)
-        self.preparer.prepare(self.client, COLLECTION_PATH_GUEST)
+        self.preparer.prepare(self.client, COLLECTION_PATH_GUEST, self.generate_save_tag)
 
     def search(self, searcher_config=None):
         if searcher_config:
             self.set_searcher_config(searcher_config)
-        self.searcher.search(self.client, OUTPUT_PATH_GUEST, TOPIC_PATH_HOST, TOPIC_PATH_GUEST)
+        self.searcher.search(self.client, OUTPUT_PATH_GUEST, TOPIC_PATH_HOST, TOPIC_PATH_GUEST, self.generate_save_tag)

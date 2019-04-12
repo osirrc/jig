@@ -22,11 +22,11 @@ class Searcher:
             sys.exit("Must prepare image first...")
 
         volumes = {
-            self.config.output: {
+            os.path.abspath(self.config.output): {
                 "bind": output_path_guest,
                 "mode": "rw"
             },
-            topic_path_host: {
+            os.path.abspath(topic_path_host): {
                 "bind": topic_path_guest,
                 "mode": "ro"
             },

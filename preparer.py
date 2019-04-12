@@ -36,7 +36,7 @@ class Preparer:
         volumes = {}
 
         for name in name_to_path_host.keys():
-            path_host, path_guest = name_to_path_host[name], name_to_path_guest[name]
+            path_host, path_guest = os.path.abspath(name_to_path_host[name]), name_to_path_guest[name]
             volumes[path_host] = {
                 "bind": path_guest,
                 "mode": "ro"

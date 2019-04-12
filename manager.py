@@ -6,7 +6,7 @@ import docker
 from preparer import Preparer
 from searcher import Searcher
 
-TOPIC_PATH_HOST = os.path.join(os.getcwd(), "topics")
+TOPIC_PATH_HOST = os.path.abspath("topics")
 TOPIC_PATH_GUEST = "/input/topics/"
 
 COLLECTION_PATH_GUEST = "/input/collections/"

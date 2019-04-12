@@ -11,16 +11,16 @@ if __name__ == "__main__":
     # Specific to prepare
     parser_prepare = parser_sub.add_parser("prepare")
     parser_prepare.set_defaults(run=manager.prepare)
-    parser_prepare.add_argument("--repo", required=True, type=str, help="the image repo (i.e., rclancy/anserini-test)")
-    parser_prepare.add_argument("--tag", required=True, type=str, help="the image tag (i.e., latest)")
+    parser_prepare.add_argument("--repo", required=True, type=str, help="the image repo (i.e., osirrc2019/anserini)")
+    parser_prepare.add_argument("--tag", default="latest", type=str, help="the image tag (i.e., latest)")
     parser_prepare.add_argument("--save_id", default="save", type=str, help="the ID of the saved image (to search from)")
     parser_prepare.add_argument("--collections", required=True, nargs="+", help="the name of the collection")
 
     # Specific to search
     parser_search = parser_sub.add_parser("search")
     parser_search.set_defaults(run=manager.search)
-    parser_search.add_argument("--repo", required=True, type=str, help="the image repo (i.e., rclancy/anserini-test)")
-    parser_search.add_argument("--tag", required=True, type=str, help="the image tag (i.e., latest)")
+    parser_search.add_argument("--repo", required=True, type=str, help="the image repo (i.e., osirrc2019/anserini)")
+    parser_search.add_argument("--tag", default="latest", type=str, help="the image tag (i.e., latest)")
     parser_search.add_argument("--save_id", default="save", type=str, help="the ID of the saved image (to search from)")
     parser_search.add_argument("--collection", required=True, help="the name of the collection")
     parser_search.add_argument("--topic", required=True, type=str, help="the topic file for search")

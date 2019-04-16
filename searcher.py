@@ -34,7 +34,9 @@ class Searcher:
         }
 
         search_args = {
-            "collection": self.config.collection,
+            "collection": {
+                "name": self.config.collection
+            },
             "topic": self.config.topic,
             "topic_format": self.config.topic_format,
             "top_k": self.config.top_k

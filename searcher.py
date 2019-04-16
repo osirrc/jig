@@ -1,3 +1,4 @@
+import json
 import os
 import subprocess
 import sys
@@ -32,12 +33,18 @@ class Searcher:
             },
         }
 
+        search_args = {
+            "collection": self.config.collection,
+            "topic": self.config.topic,
+            "topic_format": self.config.topic_format,
+            "top_k": self.config.top_k
+        }
+
         print("Starting container from saved image...")
         container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
-                                          command="sh -c '/search --collection {} --topic {} --topic_format {} --top_k {}'".format(
-                                              self.config.collection, self.config.topic, self.config.topic_format, self.config.top_k), volumes=volumes, detach=True)
+                                          command="sh -c '/search --json {}'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
 
-        print("Waiting for search to finish...")
+        print("Waiting for search to finish in container '{}'...".format(container.name))
         container.wait()
 
         print("Evaluating results using trec_eval...")

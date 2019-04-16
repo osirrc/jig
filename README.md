@@ -83,7 +83,7 @@ Before the hook is run, we will mount the document collections at a path passed 
 
 The script will be executed as: `./index --json <json> ` where the JSON string has the following format:
 
-```json
+```json5
 {
   "collections": [
     {
@@ -102,7 +102,7 @@ The purpose of the `search` hook is to perform the ad-hoc retreival runs.
 The run files are expected to be placed in the `/output` directory such that they can be evaluated externally by `jig` using `trec_eval`.
 
 The script will be executed as `./search --json <json>` where the JSON string has the following format:
-```json
+```json5
 {
   "collection": {
     "name": "<name>"          // the collection name

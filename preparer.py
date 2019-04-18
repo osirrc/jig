@@ -52,7 +52,8 @@ class Preparer:
             }
 
         index_args = {
-            "collections": [{"name": name, "path": name_to_path_guest[name], "format": format} for (name, path, format) in collections]
+            "collections": [{"name": name, "path": name_to_path_guest[name], "format": format} for (name, path, format) in collections],
+            "opts": self.config.opts
         }
 
         # The first step is to pull an image from an OSIRRC participant,
@@ -62,7 +63,7 @@ class Preparer:
         # while, but only needs to be done once, so in essence we are
         # "snapshotting" the system with the indexes.
         container = client.containers.run("{}:{}".format(self.config.repo, self.config.tag),
-                                     command="sh -c '/init; /index --json {}'".format(json.dumps(json.dumps(index_args))), volumes=volumes, detach=True)
+                                          command="sh -c '/init; /index --json {}'".format(json.dumps(json.dumps(index_args))), volumes=volumes, detach=True)
 
         print("Waiting for init and index to finish in container '{}'...".format(container.name))
         container.wait()

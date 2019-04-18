@@ -37,8 +37,10 @@ class Searcher:
             "collection": {
                 "name": self.config.collection
             },
-            "topic": self.config.topic,
-            "topic_format": self.config.topic_format,
+            "topic": {
+                "path": os.path.join(topic_path_guest, self.config.topic),
+                "format": self.config.topic_format
+            },
             "top_k": self.config.top_k
         }
 

@@ -74,7 +74,7 @@ Currently we support three hooks: `init`, `index`, and `search` (called in that 
 Each script is executed with the interpreter determined by the shebang so you can use  `#!/usr/bin/env bash`, `#!/usr/bin/env python3`, etc - just remember to make sure your `Dockerfile` is built with the appropriate base image or the required dependencies are installed. 
 
 ### init
-The purpose of the `init` hook is to do any preperation needed for the run - this could be downloading + compiling code, downloading a pre-built artifact, or downloading external resources (pre-trained models, knowledge graphs, etc.).
+The purpose of the `init` hook is to do any preparation needed for the run - this could be downloading + compiling code, downloading a pre-built artifact, or downloading external resources (pre-trained models, knowledge graphs, etc.).
 
 The script will be executed as `./init` with no arguments.
 
@@ -100,7 +100,7 @@ The script will be executed as: `./index --json <json> ` where the JSON string h
 ```
 
 ### search
-The purpose of the `search` hook is to perform the ad-hoc retreival runs.
+The purpose of the `search` hook is to perform an ad-hoc retrieval run - multiple runs can be performed by calling `jig` multiple times with different `--opts` parameters.
 
 The run files are expected to be placed in the `/output` directory such that they can be evaluated externally by `jig` using `trec_eval`.
 
@@ -118,35 +118,6 @@ The script will be executed as `./search --json <json>` where the JSON string ha
   "top_k": <int>              // the num of retrieval results for top-k retrieval
 }
 ```
-
-# Docker Container Contract
-
-Currently we support three hooks: `init`, `index`, and `search` (called in that order). We expect these three executables to be located in the root directory of the container.
-
-Each script is executed with the interpreter determined by the shebang so you can use  `#!/usr/bin/env bash`, `#!/usr/bin/env python3`, etc - just remember to make sure your `Dockerfile` is built with the appropriate base image or the required dependencies installed. 
-
-### init
-The purpose of the `init` hook is to do any preperation needed for the run - this could be downloading + compiling code, downloading a pre-built artifact, or downloading external resources (pre-trained models, knowledge graphs, etc.).
-
-The script will be executed as `./init` with no arguments.
-
-### index
-The purpose of the `index` hook is to build the indexes required for the run.
-
-Before the hook is run, we will mount the appropriate document collections at `/input/collections/<name>`, so your script should expect the appropriate collections to be mounted there.
-
-The script will be executed as: `./index --collections <name> <name> ...` where...
-- `--collections <name> <name> ...` is a space-delimited list of collection names that map into `/input/collections/<name>`
-
-### search
-The purpose of the `search` hook is to perform the ad-hoc retreival runs.
-
-The run files are expected to be placed in the `/output` directory such that they can be evaluated externally by `jig` using `trec_eval`.
-
-The script will be executed as `./search --collection <name> --topic <topic> --topic_format <topic_format>` where...
-- `--collection <name>` is the name of the collection being run on (same as the `index` script, so you can map back to the location you chose to store the index)
-- `--topic <topic>` is the topic file that maps to `/input/topics/<topic>` 
-- `--topic_format <topic_format>` is the format of the topic file
 
 ## Reference Images
 

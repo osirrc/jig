@@ -49,7 +49,7 @@ Options with `none` as the default are required.
 | `--tag` | `string` | `latest` | `--latest` | the tag on Docker Hub
 | `--collections` | `[name]=[path]=[format] ...` | `none` | `--collections robust04=/path/to/robust04=trectext ...` | the collections to index
 | `--save_id` | `string` | `save` | `--save_id robust04-exp1` | the ID for intermediate image after indexing
-| `--opts` | `string` | `none` | `-storeRawDocs` | extra options passed to the index script
+| `--opts` | `[key]=[value] ...` | `none` | `--opts index_args="-storeRawDocs"` | extra options passed to the index script
 
 ### Command Line Options - search
 
@@ -65,7 +65,7 @@ Options with `none` as the default are required.
 | `--top_k` | `int` | `1000` | `--top_k 500` | the number of results for top-k retrieval
 | `--output` | `string` | `none` | `--output $(pwd)/output` | the output path for run files
 | `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
-| `--opts` | `string` | `none` | `-bm25` | extra options passed to the search script
+| `--opts` | `[key]=[value] ...` | `none` | `--opts search_args="-bm25"` | extra options passed to the search script
 
 # Docker Container Contract
 

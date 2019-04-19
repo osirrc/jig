@@ -53,7 +53,7 @@ class Preparer:
 
         index_args = {
             "collections": [{"name": name, "path": name_to_path_guest[name], "format": format} for (name, path, format) in collections],
-            "opts": [{"key": key, "value": value} for (key, value) in map(lambda x: x.split("="), self.config.opts)],
+            "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
         }
 
         # The first step is to pull an image from an OSIRRC participant,

@@ -95,13 +95,9 @@ The script will be executed as: `./index --json <json> ` where the JSON string h
     },
     ...
   ],
-  "opts": [ // extra options passed to the index script
-    {
-      "key": "<key>",
-      "value": "<value>"
-    },
-    ...
-  ]
+  "opts": { // extra options passed to the index script
+    "<key>": "<value>"
+  },
 }
 ```
 
@@ -116,13 +112,9 @@ The script will be executed as `./search --json <json>` where the JSON string ha
   "collection": {
     "name": "<name>"          // the collection name
   },
-  "opts": [ // extra options passed to the search script
-    {
-      "key": "<key>",
-      "value": "<value>"
-    },
-    ...
-  ],
+  "opts": { // extra options passed to the search script
+    "<key>": "<value>"
+  },
   "topic": {
     "path": "/path/to/topic", // the path to the topic file
     "format": "trec"          // the format of the topic file

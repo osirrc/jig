@@ -38,8 +38,10 @@ class Searcher:
                 "name": self.config.collection
             },
             "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
-            "topic": self.config.topic,
-            "topic_format": self.config.topic_format,
+            "topic": {
+                "path": os.path.join(topic_path_guest, self.config.topic),
+                "format": self.config.topic_format
+            },
             "top_k": self.config.top_k
         }
 

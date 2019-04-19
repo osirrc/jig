@@ -48,8 +48,9 @@ class Searcher:
         container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
                                           command="sh -c '/search --json {}'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
 
-        print("Waiting for search to finish in container '{}'...".format(container.name))
-        container.wait()
+        print("Logs for search in container '{}'...".format(container.name))
+        for line in container.logs(stream=True):
+            print(str(line.decode('utf-8')), end="")
 
         print("Evaluating results using trec_eval...")
         for file in os.listdir(self.config.output):

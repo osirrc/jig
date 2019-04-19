@@ -64,8 +64,9 @@ class Preparer:
         container = client.containers.run("{}:{}".format(self.config.repo, self.config.tag),
                                           command="sh -c '/init; /index --json {}'".format(json.dumps(json.dumps(index_args))), volumes=volumes, detach=True)
 
-        print("Waiting for init and index to finish in container '{}'...".format(container.name))
-        container.wait()
+        print("Logs for init and index in container '{}'...".format(container.name))
+        for line in container.logs(stream=True):
+            print(str(line.decode('utf-8')), end="")
 
         print("Committing image...")
         container.commit(repository=self.config.repo, tag=generate_save_tag(self.config.tag, self.config.save_id))

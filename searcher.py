@@ -1,3 +1,4 @@
+import json
 import os
 import subprocess
 import sys
@@ -22,23 +23,35 @@ class Searcher:
             sys.exit("Must prepare image first...")
 
         volumes = {
-            self.config.output: {
+            os.path.abspath(self.config.output): {
                 "bind": output_path_guest,
                 "mode": "rw"
             },
-            topic_path_host: {
+            os.path.abspath(topic_path_host): {
                 "bind": topic_path_guest,
                 "mode": "ro"
             },
         }
 
+        search_args = {
+            "collection": {
+                "name": self.config.collection
+            },
+            "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
+            "topic": {
+                "path": os.path.join(topic_path_guest, self.config.topic),
+                "format": self.config.topic_format
+            },
+            "top_k": self.config.top_k
+        }
+
         print("Starting container from saved image...")
         container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
-                                          command="sh -c '/search --collection {} --topic {} --topic_format {} --top_k {}'".format(
-                                              self.config.collection, self.config.topic, self.config.topic_format, self.config.top_k), volumes=volumes, detach=True)
+                                          command="sh -c '/search --json {}'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
 
-        print("Waiting for search to finish...")
-        container.wait()
+        print("Logs for search in container '{}'...".format(container.name))
+        for line in container.logs(stream=True):
+            print(str(line.decode('utf-8')), end="")
 
         print("Evaluating results using trec_eval...")
         for file in os.listdir(self.config.output):

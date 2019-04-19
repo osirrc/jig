@@ -10,7 +10,7 @@ To test the jig with an Anserini image, try:
 python run.py prepare \
     --repo osirrc2019/anserini \
     --tag latest \
-    --collections [name]=[path] ...
+    --collections [name]=[path]=[format] ...
 ```
 
 then
@@ -27,6 +27,7 @@ python run.py search \
 
 Change:
  - `[name]` and `[path]` to the collection name and path on the host, respectively
+ - `[format]` is one of `trectext`, `trecweb`, `json`, or `warc`
  - `[topic_file_name]` to the name of the topic file
  - `/path/to/output` to the desired output directory.
  - `[qrels]` to the appropriate qrels file

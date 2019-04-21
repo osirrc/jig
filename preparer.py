@@ -65,7 +65,7 @@ class Preparer:
         container = client.containers.run("{}:{}".format(self.config.repo, self.config.tag),
                                           command="sh -c '/init; /index --json {}'".format(json.dumps(json.dumps(index_args))), volumes=volumes, detach=True)
 
-        print("Logs for init and index in container '{}'...".format(container.name))
+        print("Logs for init and index in container with ID {}...".format(container.id))
         for line in container.logs(stream=True):
             print(str(line.decode('utf-8')), end="")
 

@@ -49,7 +49,7 @@ class Searcher:
         container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
                                           command="sh -c '/search --json {}'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
 
-        print("Logs for search in container '{}'...".format(container.name))
+        print("Logs for search in container with ID {}...".format(container.id))
         for line in container.logs(stream=True):
             print(str(line.decode('utf-8')), end="")
 

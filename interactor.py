@@ -29,16 +29,18 @@ class Interactor:
         }
 
         print("Starting a container from saved image...")
-        container = client.containers.create("{}:{}".format(self.config.repo, save_tag),
-                                            auto_remove=False, stdin_open=True, tty=True)
+        # create with sh command to override any default command
+        container = client.containers.create("{}:{}".format(self.config.repo, save_tag), command="sh", tty=True)
         container.start()
         
         print("Running interact script in container...")
         log = container.exec_run("sh -c '/interact --json {}'".format(json.dumps(json.dumps(interact_args))), 
                                 stdout=True, stderr=True, stream=True)
+        
+        print("Logs for interact in container with ID {}...".format(container.id))
         for line in log[1]:
             print(str(line.decode('utf-8')), end="")
-        
+
         print("You can now interact with container with ID {}".format(container.id))
 
         if self.config.exit_jig:

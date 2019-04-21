@@ -4,12 +4,11 @@ What's a [jig](https://en.wikipedia.org/wiki/Jig_(tool))?
 
 Run the `init.sh` script to download + compile `trec_eval` and download the appropriate topics + qrels.
 
-To test the jig with an Anserini image, try:
+To test the jig with an Anserini image using default parameters, try:
 
 ```
 python run.py prepare \
     --repo osirrc2019/anserini \
-    --tag latest \
     --collections [name]=[path]=[format] ...
 ```
 
@@ -18,22 +17,20 @@ then
 ```
 python run.py search \
     --repo osirrc2019/anserini \
-    --tag latest \
     --collection [name] \
-    --topic [topic_file_name] \
+    --topic topics/[topic] \
     --output /path/to/output \
-    --qrels $(pwd)/qrels/[qrels]
+    --qrels qrels/[qrels]
 ```
 
 Change:
  - `[name]` and `[path]` to the collection name and path on the host, respectively
  - `[format]` is one of `trectext`, `trecweb`, `json`, or `warc`
- - `[topic_file_name]` to the name of the topic file
+ - `[topic]` to the path of the topic file
  - `/path/to/output` to the desired output directory.
  - `[qrels]` to the appropriate qrels file
  
 The output run files will appear in the argument of `--output`.
-Note that `topic` is just the name of the file from the `topics` dir.
 The full command line parameters are below.
 
 To run a container (from a saved image) that you can interact with, try:
@@ -70,7 +67,8 @@ Options with `none` as the default are required.
 | `--tag` | `string` | `latest` | `--tag latest` | the tag on Docker Hub
 | `--collection` | `string` | `none` | `--collection robust04` | the collections to index
 | `--save_id` | `string` | `save` | `--save_id robust04-exp1` | used to calculate the ID of the intermediate image to search from
-| `--topic` | `string` | `none` | `--topic topics.robust04.301-450.601-700.txt` | the name (not path) of the topic file
+| `--topic` | `string` | `none` | `--topic topics/topics.robust04.301-450.601-700.txt` | the path of the topic file
+| `--topic_format` | `string` | `trec` | `--topic_format trec` | the format of the topic file
 | `--top_k` | `int` | `1000` | `--top_k 500` | the number of results for top-k retrieval
 | `--output` | `string` | `none` | `--output $(pwd)/output` | the output path for run files
 | `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation

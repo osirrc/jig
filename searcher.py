@@ -39,7 +39,7 @@ class Searcher:
             },
             "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
             "topic": {
-                "path": os.path.join(topic_path_guest, self.config.topic),
+                "path": os.path.join(topic_path_guest, os.path.basename(self.config.topic)),
                 "format": self.config.topic_format
             },
             "top_k": self.config.top_k

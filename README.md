@@ -54,7 +54,7 @@ Options with `none` as the default are required.
 | `--repo` | `string` | `none` | `--repo osirrc2019/anserini` | the repo on Docker Hub
 | `--tag` | `string` | `latest` | `--tag latest` | the tag on Docker Hub
 | `--collections` | `[name]=[path]=[format] ...` | `none` | `--collections robust04=/path/to/robust04=trectext ...` | the collections to index
-| `--save_id` | `string` | `save` | `--save_id robust04-exp1` | used to calculate the ID for intermediate image after indexing
+| `--save_to_tag` | `string` | `save` | `--save_to_tag robust04-exp1` | used to calculate the ID for intermediate image after indexing
 | `--opts` | `[key]=[value] ...` | `none` | `--opts index_args="-storeRawDocs"` | extra options passed to the index script
 
 ### Command Line Options - search
@@ -66,7 +66,7 @@ Options with `none` as the default are required.
 | `--repo` | `string` | `none` | `--repo osirrc2019/anserini` | the repo on Docker Hub
 | `--tag` | `string` | `latest` | `--tag latest` | the tag on Docker Hub
 | `--collection` | `string` | `none` | `--collection robust04` | the collections to index
-| `--save_id` | `string` | `save` | `--save_id robust04-exp1` | used to calculate the ID of the intermediate image to search from
+| `--load_from_tag` | `string` | `save` | `--load_from_tag robust04-exp1` | used to calculate the ID of the intermediate image to search from
 | `--topic` | `string` | `none` | `--topic topics/topics.robust04.301-450.601-700.txt` | the path of the topic file
 | `--topic_format` | `string` | `trec` | `--topic_format trec` | the format of the topic file
 | `--top_k` | `int` | `1000` | `--top_k 500` | the number of results for top-k retrieval
@@ -79,7 +79,7 @@ Options with `none` as the default are required.
 | --- | --- | --- | --- | ---
 | `--repo` | `string` | `none` | `--repo osirrc2019/anserini` | the repo on Docker Hub
 | `--tag` | `string` | `latest` | `--tag latest` | the tag on Docker Hub
-| `--save_id` | `string` | `save` | `--save_id robust04-exp1` | used to calculate the ID of the intermediate image to interact with
+| `--load_from_tag` | `string` | `save` | `--load_from_tag robust04-exp1` | used to calculate the ID of the intermediate image to interact with
 | `--exit_jig` | `string` | `false` | `true` | determines whether jig exits after starting the container
 | `--opts` | `[key]=[value] ...` | `none` | `--opts interact_args="localhost:5000"` | extra options passed to the interact script
 

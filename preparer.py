@@ -70,4 +70,4 @@ class Preparer:
             print(str(line.decode('utf-8')), end="")
 
         print("Committing image...")
-        container.commit(repository=self.config.repo, tag=generate_save_tag(self.config.tag, self.config.save_id))
+        container.commit(repository=self.config.repo, tag=generate_save_tag(self.config.tag, self.config.save_to_tag))

@@ -16,7 +16,7 @@ class Searcher:
         """
         Runs the search and evaluates the results (run files placed into the /output directory) using trec_eval
         """
-        save_tag = generate_save_tag(self.config.tag, self.config.save_id)
+        save_tag = generate_save_tag(self.config.tag, self.config.load_from_tag)
 
         exists = len(client.images.list(filters={"reference": "{}:{}".format(self.config.repo, save_tag)})) != 0
         if not exists:

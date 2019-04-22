@@ -26,6 +26,7 @@ if __name__ == "__main__":
     parser_prepare.add_argument("--save_id", default="save", type=str, help="determiens the ID of saved image (to search from)")
     parser_prepare.add_argument("--collections", required=True, nargs="+", help="the name of the collection")
     parser_prepare.add_argument("--opts", nargs="+", default="", type=str, help="the args passed to the index script")
+    parser_prepare.add_argument("--version", default="", type=str, help="the version string passed to the init script")
 
     # Specific to search
     parser_search = parser_sub.add_parser("search")

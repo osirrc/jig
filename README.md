@@ -56,6 +56,7 @@ Options with `none` as the default are required.
 | `--collections` | `[name]=[path]=[format] ...` | `none` | `--collections robust04=/path/to/robust04=trectext ...` | the collections to index
 | `--save_id` | `string` | `save` | `--save_id robust04-exp1` | used to calculate the ID for intermediate image after indexing
 | `--opts` | `[key]=[value] ...` | `none` | `--opts index_args="-storeRawDocs"` | extra options passed to the index script
+| `--version` | `string` | `none` | `--version 3b16584a7e3e7e3b93642a95675fc38396581bdf` | the version string passed to the init script
 
 ### Command Line Options - search
 
@@ -92,7 +93,12 @@ Each script is executed with the interpreter determined by the shebang so you ca
 ### init
 The purpose of the `init` hook is to do any preparation needed for the run - this could be downloading + compiling code, downloading a pre-built artifact, or downloading external resources (pre-trained models, knowledge graphs, etc.).
 
-The script will be executed as `./init` with no arguments.
+The script will be executed as `./init --json <json>`  where the JSON string has the following format:
+```json5
+{
+  "version": "<version>" // the version string (i.e. commit id, version string, etc.)
+}
+```
 
 ### index
 The purpose of the `index` hook is to build the indexes required for the run.

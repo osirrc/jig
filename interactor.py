@@ -19,7 +19,7 @@ class Interactor:
         process started by the 'init'/'index' hooks is gone.
         """
 
-        save_tag = generate_save_tag(self.config.tag, self.config.load_from_tag)
+        save_tag = generate_save_tag(self.config.tag, self.config.load_from_snapshot)
         exists = len(client.images.list(filters={"reference": "{}:{}".format(self.config.repo, save_tag)})) != 0
         if not exists:
             sys.exit("Must prepare image first...")

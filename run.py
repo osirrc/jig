@@ -23,7 +23,7 @@ if __name__ == "__main__":
     parser_prepare.set_defaults(run=manager.prepare)
     parser_prepare.add_argument("--repo", required=True, type=str, help="the image repo (i.e., osirrc2019/anserini)")
     parser_prepare.add_argument("--tag", default="latest", type=str, help="the image tag (i.e., latest)")
-    parser_prepare.add_argument("--save_id", default="save", type=str, help="determiens the ID of saved image (to search from)")
+    parser_prepare.add_argument("--save_to_snapshot", default="save", type=str, help="used to determine the tag of the snapshotted image after indexing")
     parser_prepare.add_argument("--collections", required=True, nargs="+", help="the name of the collection")
     parser_prepare.add_argument("--opts", nargs="+", default="", type=str, help="the args passed to the index script")
 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     parser_search.set_defaults(run=manager.search)
     parser_search.add_argument("--repo", required=True, type=str, help="the image repo (i.e., osirrc2019/anserini)")
     parser_search.add_argument("--tag", default="latest", type=str, help="the image tag (i.e., latest)")
-    parser_search.add_argument("--save_id", default="save", type=str, help="determines the ID of saved image (to search from)")
+    parser_search.add_argument("--load_from_snapshot", default="save", type=str, help="used to determine the tag of the snapshotted image to search from")
     parser_search.add_argument("--collection", required=True, help="the name of the collection")
     parser_search.add_argument("--topic", required=True, type=str, help="the topic file for search")
     parser_search.add_argument("--topic_format", default="trec", type=str, help="the topic file format for search")
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     parser_interact.set_defaults(run=manager.interact)
     parser_interact.add_argument("--repo", required=True, type=str, help="the image repo (i.e., osirrc2019/anserini)")
     parser_interact.add_argument("--tag", default="latest", type=str, help="the image tag (i.e., latest)")
-    parser_interact.add_argument("--save_id", default="save", type=str, help="determines the ID of saved image (to interact with)")
+    parser_interact.add_argument("--load_from_snapshot", default="save", type=str, help="used to determine the tag of the snapshotted image to interact with")
     parser_interact.add_argument("--exit_jig", default="false", type=str_to_bool, help="whether to exit jig after running container")
     parser_interact.add_argument("--opts", nargs="+", default="", type=str, help="the args passed to the interact script")
 

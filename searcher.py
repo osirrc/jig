@@ -16,7 +16,7 @@ class Searcher:
         """
         Runs the search and evaluates the results (run files placed into the /output directory) using trec_eval
         """
-        save_tag = generate_save_tag(self.config.tag, self.config.save_id)
+        save_tag = generate_save_tag(self.config.tag, self.config.load_from_snapshot)
 
         exists = len(client.images.list(filters={"reference": "{}:{}".format(self.config.repo, save_tag)})) != 0
         if not exists:
@@ -39,7 +39,7 @@ class Searcher:
             },
             "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
             "topic": {
-                "path": os.path.join(topic_path_guest, self.config.topic),
+                "path": os.path.join(topic_path_guest, os.path.basename(self.config.topic)),
                 "format": self.config.topic_format
             },
             "top_k": self.config.top_k
@@ -49,7 +49,7 @@ class Searcher:
         container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
                                           command="sh -c '/search --json {}'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
 
-        print("Logs for search in container '{}'...".format(container.name))
+        print("Logs for search in container with ID {}...".format(container.id))
         for line in container.logs(stream=True):
             print(str(line.decode('utf-8')), end="")
 

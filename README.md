@@ -24,17 +24,17 @@ then
 python run.py search \
     --repo osirrc2019/anserini \
     --collection [name] \
-    --topic topics/[topic] \
+    --topic /path/to/topic \
     --output /path/to/output \
-    --qrels qrels/[qrels]
+    --qrels /path/to/qrels
 ```
 
 Change:
  - `[name]` and `[path]` to the collection name and path on the host, respectively
  - `[format]` is one of `trectext`, `trecweb`, `json`, or `warc`
- - `[topic]` to the path of the topic file
+ - `/path/to/topic` to the path of the topic file
  - `/path/to/output` to the desired output directory.
- - `[qrels]` to the appropriate qrels file
+ - `/path/to/qrels` to the path of appropriate qrels file
  
 The output run files will appear in the argument of `--output`.
 The full command line parameters are below.

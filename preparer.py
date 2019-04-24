@@ -51,9 +51,14 @@ class Preparer:
                 "mode": "ro"
             }
 
+        init_args = {
+            "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
+            "version": self.config.version
+        }
+
         index_args = {
             "collections": [{"name": name, "path": name_to_path_guest[name], "format": format} for (name, path, format) in collections],
-            "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
+            "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)}
         }
 
         # The first step is to pull an image from an OSIRRC participant,
@@ -63,7 +68,9 @@ class Preparer:
         # while, but only needs to be done once, so in essence we are
         # "snapshotting" the system with the indexes.
         container = client.containers.run("{}:{}".format(self.config.repo, self.config.tag),
-                                          command="sh -c '/init; /index --json {}'".format(json.dumps(json.dumps(index_args))), volumes=volumes, detach=True)
+                                          command="sh -c '/init --json {}; /index --json {}'".format(json.dumps(json.dumps(init_args)),
+                                                                                                     json.dumps(json.dumps(index_args))),
+                                          volumes=volumes, detach=True)
 
         print("Logs for init and index in container with ID {}...".format(container.id))
         for line in container.logs(stream=True):

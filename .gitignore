@@ -1,8 +1,5 @@
 __pycache__/
-
+*~
 .idea/
-
-qrels/
-topics/
 trec_eval/
 venv/

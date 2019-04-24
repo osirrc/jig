@@ -2,7 +2,13 @@
 
 What's a [jig](https://en.wikipedia.org/wiki/Jig_(tool))?
 
-Run the `init.sh` script to download + compile `trec_eval` and download the appropriate topics + qrels.
+To get started, download + compile `trec_eval` with the following:
+
+```
+git clone https://github.com/usnistgov/trec_eval.git && make -C trec_eval
+```
+
+For common test collections, [topics](topics/) and [qrels](qrels/) are already checked into this repo.
 
 To test the jig with an Anserini image, try:
 

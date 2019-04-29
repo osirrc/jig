@@ -17,7 +17,7 @@ OUTPUT_PATH_GUEST = "/output"
 class Manager:
 
     def __init__(self):
-        self.client = docker.from_env(timeout=86_400)
+        self.client = docker.from_env(timeout=400)
         self.preparer = Preparer()
         self.searcher = Searcher()
         self.interactor = Interactor()

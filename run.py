@@ -2,14 +2,15 @@ import argparse
 
 from manager import Manager
 
+
 def str_to_bool(s):
-        s = s.lower()
-        if s == "true":
-            return True
-        elif s == "false":
-            return False
-        else:
-            raise argparse.ArgumentTypeError("Expected boolean value.")
+    s = s.lower()
+    if s == "true":
+        return True
+    elif s == "false":
+        return False
+    else:
+        raise argparse.ArgumentTypeError("Expected boolean value.")
 
 
 if __name__ == "__main__":

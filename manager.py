@@ -1,11 +1,11 @@
-import os
 import hashlib
+import os
 
 import docker
 
+from interactor import Interactor
 from preparer import Preparer
 from searcher import Searcher
-from interactor import Interactor
 
 TOPIC_PATH_HOST = os.path.abspath("topics")
 TOPIC_PATH_GUEST = "/input/topics/"
@@ -28,7 +28,7 @@ class Manager:
 
     def set_searcher_config(self, searcher_config):
         self.searcher.set_config(searcher_config)
-    
+
     def set_interactor_config(self, interactor_config):
         self.interactor.set_config(interactor_config)
 

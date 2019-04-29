@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 import sys
@@ -11,7 +12,7 @@ class Preparer:
     def set_config(self, preparer_config):
         self.config = preparer_config
 
-    def prepare(self, client, collection_path_guest, generate_save_tag):
+    def prepare(self, client, collection_path_guest, output_path_guest, generate_save_tag):
         """
         Builds an image that has been initialized and has indexed the collection.
 
@@ -40,7 +41,8 @@ class Preparer:
         name_to_path_host = dict(map(lambda x: (x[0], x[1]), collections))
 
         # Mapping from collection name to path in container
-        name_to_path_guest = dict(map(lambda name: (name, os.path.join(collection_path_guest, name)), name_to_path_host.keys()))
+        name_to_path_guest = dict(
+            map(lambda name: (name, os.path.join(collection_path_guest, name)), name_to_path_host.keys()))
 
         volumes = {}
 
@@ -50,6 +52,9 @@ class Preparer:
                 "bind": path_guest,
                 "mode": "ro"
             }
+        # mount optional output folder. Mounted on guest "/output" path.
+        if len(self.config.output) > 0:
+            volumes[self.config.output] = {"bind": output_path_guest, "mode": "rw"}
 
         init_args = {
             "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
@@ -57,7 +62,8 @@ class Preparer:
         }
 
         index_args = {
-            "collections": [{"name": name, "path": name_to_path_guest[name], "format": format} for (name, path, format) in collections],
+            "collections": [{"name": name, "path": name_to_path_guest[name], "format": format} for (name, path, format)
+                            in collections],
             "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)}
         }
 
@@ -68,8 +74,9 @@ class Preparer:
         # while, but only needs to be done once, so in essence we are
         # "snapshotting" the system with the indexes.
         container = client.containers.run("{}:{}".format(self.config.repo, self.config.tag),
-                                          command="sh -c '/init --json {}; /index --json {}'".format(json.dumps(json.dumps(init_args)),
-                                                                                                     json.dumps(json.dumps(index_args))),
+                                          command="sh -c '/init --json {}; /index --json {}'".format(
+                                              json.dumps(json.dumps(init_args)),
+                                              json.dumps(json.dumps(index_args))),
                                           volumes=volumes, detach=True)
 
         print("Logs for init and index in container with ID {}...".format(container.id))
@@ -77,4 +84,5 @@ class Preparer:
             print(str(line.decode('utf-8')), end="")
 
         print("Committing image...")
-        container.commit(repository=self.config.repo, tag=generate_save_tag(self.config.tag, self.config.save_to_snapshot))
+        container.commit(repository=self.config.repo,
+                         tag=generate_save_tag(self.config.tag, self.config.save_to_snapshot))

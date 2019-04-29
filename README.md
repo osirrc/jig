@@ -8,6 +8,12 @@ To get started, download + compile `trec_eval` with the following:
 git clone https://github.com/usnistgov/trec_eval.git && make -C trec_eval
 ```
 
+Make sure the Docker Python package is installed (via pip, conda, etc.):
+```
+pip install -r requirements.txt
+```
+
+
 For common test collections, [topics](topics/) and [qrels](qrels/) are already checked into this repo.
 
 To test the jig with an Anserini image using default parameters, try:

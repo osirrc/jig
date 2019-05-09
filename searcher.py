@@ -57,5 +57,5 @@ class Searcher:
         for file in os.listdir(self.config.output):
             run = os.path.join(self.config.output, file)
             print("###\n# {}\n###".format(run))
-            subprocess.run(["trec_eval/trec_eval", "-m", "map", "-m", "P.30", self.config.qrels, run])
+            subprocess.run(["trec_eval/trec_eval", " ".join(map(lambda x: "-m {}".format(x), self.config.measures)), self.config.qrels, run])
             print()

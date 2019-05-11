@@ -86,6 +86,7 @@ Options with `none` as the default are required.
 | `--output` | `string` | `none` | `--output $(pwd)/output` | the output path for run files
 | `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
 | `--opts` | `[key]=[value] ...` | `none` | `--opts search_args="-bm25"` | extra options passed to the search script
+| `--measures` | `string ...` | `"map P.30"` | `--measures recall.1000 map` | the measures for trec_eval
 
 ### Command Line Options - interact
 | Option Name | Type | Default | Example | Description

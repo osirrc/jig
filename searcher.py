@@ -53,9 +53,12 @@ class Searcher:
         for line in container.logs(stream=True):
             print(str(line.decode('utf-8')), end="")
 
+        # The measure string passed to trec_eval
+        measures = " ".join(map(lambda x: "-m {}".format(x), self.config.measures))
+
         print("Evaluating results using trec_eval...")
         for file in os.listdir(self.config.output):
             run = os.path.join(self.config.output, file)
             print("###\n# {}\n###".format(run))
-            subprocess.run(["trec_eval/trec_eval", "-m", "map", "-m", "P.30", self.config.qrels, run])
+            subprocess.run("trec_eval/trec_eval {} {} {}".format(measures, self.config.qrels, run).split())
             print()

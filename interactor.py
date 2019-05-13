@@ -30,7 +30,7 @@ class Interactor:
 
         print("Starting a container from saved image...")
         # create with sh command to override any default command
-        container = client.containers.create("{}:{}".format(self.config.repo, save_tag), command="sh", tty=True)
+        container = client.containers.create("{}:{}".format(self.config.repo, save_tag), command="sh", tty=True, publish_all_ports=True)
         container.start()
 
         print("Running interact script in container...")

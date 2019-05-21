@@ -169,6 +169,8 @@ The script will be executed as `./interact --json <json>` where the JSON string 
 }
 ```
 
+Note: If you need a port accessible, ensure you `EXPOSE` the port in your `Dockerfile`.
+
 ## Reference Images
 
 + Anserini: [[code](https://github.com/osirrc2019/anserini-docker)] [[Docker Hub](https://hub.docker.com/r/rclancy/anserini-test)]

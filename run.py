@@ -36,7 +36,7 @@ if __name__ == "__main__":
     trainer_prepare.add_argument("--repo", required=True, type=str, help="the image repo (i.e., albep/nvsm)")
     trainer_prepare.add_argument("--tag", default="latest", type=str, help="the image tag (i.e., latest)")
     trainer_prepare.add_argument("--load_from_snapshot", default="save", type=str,
-                                 help="used to determine the tag of the snapshotted image to interact with")
+                                 help="used to determine the tag of the snapshotted image to train from")
     trainer_prepare.add_argument("--topic", required=True, type=str, help="the topic file for search")
     trainer_prepare.add_argument("--topic_format", default="trec", type=str, help="the topic file format for training")
 

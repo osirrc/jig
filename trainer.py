@@ -2,8 +2,8 @@ import json
 import os
 import sys
 
-QRELS_GUEST_PATH = '/models/qrels/qrels.qrel'
-MODELS_GUEST_PATH = '/models'
+QRELS_GUEST_PATH = '/output/qrels/qrels.qrel'
+MODELS_GUEST_PATH = '/output'
 
 
 class Trainer:
@@ -70,8 +70,3 @@ class Trainer:
         print("Logs for training in container with ID {}...".format(container.id))
         for line in container.logs(stream=True):
             print(str(line.decode('utf-8')), end="")
-
-        exit()
-        print("Committing image...")
-        container.commit(repository=self.config.repo,
-                         tag=generate_save_tag(self.config.tag, self.config.save_to_snapshot))

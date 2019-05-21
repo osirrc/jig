@@ -14,8 +14,8 @@ TOPIC_PATH_GUEST = "/input/topics/"
 COLLECTION_PATH_GUEST = "/input/collections/"
 OUTPUT_PATH_GUEST = "/output"
 
-TEST_SPLIT_PATH_GUEST = '/output/splits/test_split.txt'
-VALIDATION_SPLIT_PATH_GUEST = '/output/splits/validation_split.txt'
+TEST_SPLIT_PATH_GUEST = '/data/splits/test_split.txt'
+VALIDATION_SPLIT_PATH_GUEST = '/data/splits/validation_split.txt'
 
 
 class Manager:

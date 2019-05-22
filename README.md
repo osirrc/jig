@@ -153,6 +153,28 @@ The script will be executed as: `./index --json <json> ` where the JSON string h
 }
 ```
 
+### train
+The purpose of the `train` hook is to train a retrieval model.
+
+The script will be executed as: `./train --json <json> ` where the JSON string has the following format:
+```json5
+{
+  "topic": {
+    "path": "/path/to/topic", // the path to the topic file
+    "format": "trec"          // the format of the topic file
+  },
+  "qrels": {
+    "path": "/path/to/qrel",  // the path to the qrel file
+  },
+  "model_folder": {
+    "path": "/ouptut",  // the guest path of the output model folder in the host passed to the jig
+  },
+  "opts": { // extra options passed to the index script
+    "<key>": "<value>"
+  },
+}
+```
+
 ### search
 The purpose of the `search` hook is to perform an ad-hoc retrieval run - multiple runs can be performed by calling `jig` multiple times with different `--opts` parameters.
 

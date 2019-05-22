@@ -87,6 +87,24 @@ Options with `none` as the default are required.
 | `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
 | `--opts` | `[key]=[value] ...` | `none` | `--opts search_args="-bm25"` | extra options passed to the search script
 
+### Command Line Options - train
+
+`python run.py train <options>`
+
+| Option Name | Type | Default | Example | Description
+| --- | --- | --- | --- | ---
+| `--repo` | `string` | `none` | `--repo osirrc2019/anserini` | the repo on Docker Hub
+| `--tag` | `string` | `latest` | `--tag latest` | the tag on Docker Hub
+| `--load_from_snapshot` | `string` | `save` | `--load_from_snapshot robust04-exp1` | used to determine the tag of the snapshotted image to search from
+| `--topic` | `string` | `none` | `--topic topics/topics.robust04.301-450.601-700.txt` | the path of the topic file
+| `--topic_format` | `string` | `trec` | `--topic_format trec` | the format of the topic file
+| `--test_split` | `string` | `none` | `--test_split $(pwd)/sample_training_validation_query_ids/robust04/test.txt` | the path to the file with the query ids to use for testing
+| `--validation_split` | `string` | `none` | `--validation_split $(pwd)/sample_training_validation_query_ids/robust04/validation.txt` | the path to the file with the query ids to use for the model validation
+| `--model_folder` | `string` | `none` | `--model_folder $(pwd)/output` | the folder to save the model trained by the docker
+| `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
+| `--opts` | `[key]=[value] ...` | `none` | `--opts epochs=10` | extra options passed to the search script
+
+
 ### Command Line Options - interact
 | Option Name | Type | Default | Example | Description
 | --- | --- | --- | --- | ---
@@ -135,6 +153,28 @@ The script will be executed as: `./index --json <json> ` where the JSON string h
 }
 ```
 
+### train
+The purpose of the `train` hook is to train a retrieval model.
+
+The script will be executed as: `./train --json <json> ` where the JSON string has the following format:
+```json5
+{
+  "topic": {
+    "path": "/path/to/topic", // the path to the topic file
+    "format": "trec"          // the format of the topic file
+  },
+  "qrels": {
+    "path": "/path/to/qrel",  // the path to the qrel file
+  },
+  "model_folder": {
+    "path": "/output",  // the path (in the docker image) where the output model folder (passed to the jig) is mounted
+  },
+  "opts": { // extra options passed to the index script
+    "<key>": "<value>"
+  },
+}
+```
+
 ### search
 The purpose of the `search` hook is to perform an ad-hoc retrieval run - multiple runs can be performed by calling `jig` multiple times with different `--opts` parameters.
 
@@ -168,6 +208,8 @@ The script will be executed as `./interact --json <json>` where the JSON string 
   },
 }
 ```
+
+Note: If you need a port accessible, ensure you `EXPOSE` the port in your `Dockerfile`.
 
 ## Reference Images
 

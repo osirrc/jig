@@ -39,6 +39,8 @@ if __name__ == "__main__":
                                  help="used to determine the tag of the snapshotted image to train from")
     trainer_prepare.add_argument("--topic", required=True, type=str, help="the topic file for search")
     trainer_prepare.add_argument("--topic_format", default="trec", type=str, help="the topic file format for training")
+    trainer_prepare.add_argument("--save_to_snapshot", default="save", type=str,
+                                 help="used to determine the tag of the snapshotted image after indexing")
     trainer_prepare.add_argument("--test_split", required=True, type=str,
                                  help="the subset of topic ids to use for testing")
     trainer_prepare.add_argument("--validation_split", required=True, type=str,
@@ -47,6 +49,7 @@ if __name__ == "__main__":
                                  help="folder where to store the trained model")
     trainer_prepare.add_argument("--qrels", required=True, type=str, help="the qrels file for model selection")
     trainer_prepare.add_argument("--opts", nargs="+", default="", type=str, help="the args passed to the index script")
+    trainer_prepare.add_argument("--version", default="", type=str, help="the version string passed to the init script")
 
     # Specific to search
     parser_search = parser_sub.add_parser("search")

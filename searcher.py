@@ -12,7 +12,8 @@ class Searcher:
     def set_config(self, searcher_config):
         self.config = searcher_config
 
-    def search(self, client, output_path_guest, topic_path_host, topic_path_guest, generate_save_tag):
+    def search(self, client, output_path_guest, topic_path_host, topic_path_guest, test_split_path_guest,
+               generate_save_tag):
         """
         Runs the search and evaluates the results (run files placed into the /output directory) using trec_eval
         """
@@ -30,8 +31,11 @@ class Searcher:
             os.path.abspath(topic_path_host): {
                 "bind": topic_path_guest,
                 "mode": "ro"
-            },
+            }
         }
+
+        if len(self.config.test_split) > 0:
+            volumes[self.config.test_split] = {"bind": test_split_path_guest, "mode": "ro"}
 
         search_args = {
             "collection": {

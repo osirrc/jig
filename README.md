@@ -167,7 +167,7 @@ The script will be executed as: `./train --json <json> ` where the JSON string h
     "path": "/path/to/qrel",  // the path to the qrel file
   },
   "model_folder": {
-    "path": "/ouptut",  // the guest path of the output model folder in the host passed to the jig
+    "path": "/output",  // the path (in the docker image) where the output model folder (passed to the jig) is mounted
   },
   "opts": { // extra options passed to the index script
     "<key>": "<value>"

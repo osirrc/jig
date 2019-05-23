@@ -1,6 +1,9 @@
+import sys
+
 import json
 import os
-import sys
+
+import util
 
 
 class Preparer:
@@ -40,7 +43,7 @@ class Preparer:
         name_to_path_host = dict(map(lambda x: (x[0], x[1]), collections))
 
         # Mapping from collection name to path in container
-        name_to_path_guest = dict(map(lambda name: (name, os.path.join(collection_path_guest, name)), name_to_path_host.keys()))
+        name_to_path_guest = dict(map(lambda x: (name, os.path.join(collection_path_guest, x[0])), collections))
 
         volumes = {}
 
@@ -51,14 +54,16 @@ class Preparer:
                 "mode": "ro"
             }
 
+        # Args for the init script
         init_args = {
-            "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
+            "opts": util.build_opts(self.config.opts),
             "version": self.config.version
         }
 
+        # Args for the index script
         index_args = {
             "collections": [{"name": name, "path": name_to_path_guest[name], "format": format} for (name, path, format) in collections],
-            "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)}
+            "opts": util.build_opts(self.config.opts)
         }
 
         # The first step is to pull an image from an OSIRRC participant,

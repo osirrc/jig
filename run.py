@@ -35,13 +35,14 @@ if __name__ == "__main__":
     parser_search.add_argument("--repo", required=True, type=str, help="the image repo (i.e., osirrc2019/anserini)")
     parser_search.add_argument("--tag", default="latest", type=str, help="the image tag (i.e., latest)")
     parser_search.add_argument("--load_from_snapshot", default="save", type=str, help="used to determine the tag of the snapshotted image to search from")
-    parser_search.add_argument("--collection", required=True, help="the name of the collection")
+    parser_search.add_argument("--collections", required=True, nargs="+", help="the name of the collection")
     parser_search.add_argument("--topic", required=True, type=str, help="the topic file for search")
     parser_search.add_argument("--topic_format", default="trec", type=str, help="the topic file format for search")
     parser_search.add_argument("--top_k", default=1000, type=int, help="the number of results for top-k retrieval")
     parser_search.add_argument("--output", required=True, type=str, help="the output directory for run files on the host")
     parser_search.add_argument("--qrels", required=True, type=str, help="the qrels file for evaluation")
     parser_search.add_argument("--opts", nargs="+", default="", type=str, help="the args passed to the search script")
+    parser_search.add_argument("--eval", default="trec", type=str, help="the eval tool to use")
     parser_search.add_argument("--measures", nargs="+", default=["map", "P.30"], type=str, help="the measures for trec_eval")
 
     # Specific to interact

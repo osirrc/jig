@@ -1,5 +1,8 @@
-import json
 import sys
+
+import json
+
+import util
 
 
 class Interactor:
@@ -25,7 +28,7 @@ class Interactor:
             sys.exit("Must prepare image first...")
 
         interact_args = {
-            "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)}
+            "opts": util.build_opts(self.config.opts)
         }
 
         print("Starting a container from saved image...")
@@ -34,8 +37,7 @@ class Interactor:
         container.start()
 
         print("Running interact script in container...")
-        log = container.exec_run("sh -c '/interact --json {}'".format(json.dumps(json.dumps(interact_args))),
-                                 stdout=True, stderr=True, stream=True)
+        log = container.exec_run("/interact --json {}".format(json.dumps(json.dumps(interact_args))), stdout=True, stderr=True, stream=True)
 
         print("Logs for interact in container with ID {}...".format(container.id))
         for line in log[1]:
@@ -44,12 +46,13 @@ class Interactor:
         print("You can now interact with container with ID {}".format(container.id))
 
         if self.config.exit_jig:
-            print("Exiting...")
-            print("Don't forget to stop and remove the container after you are done!")
-            return
+            sys.exit("Exiting... don't forget to stop and remove the container after you are done!")
 
-        wait = input("Press ENTER to stop and remove container")
+        # Wait for user input...
+        input("Press ENTER to stop and remove container")
+
         print("Stopping container {}...".format(container.id))
         container.stop()
+
         print("Removing container {}...".format(container.id))
         container.remove()

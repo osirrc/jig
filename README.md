@@ -4,21 +4,20 @@ What's a [jig](https://en.wikipedia.org/wiki/Jig_(tool))?
 
 To get started, download + compile `trec_eval` with the following:
 
-```
+```bash
 git clone https://github.com/usnistgov/trec_eval.git && make -C trec_eval
 ```
 
 Make sure the Docker Python package is installed (via pip, conda, etc.):
-```
+```bash
 pip install -r requirements.txt
 ```
-
 
 For common test collections, [topics](topics/) and [qrels](qrels/) are already checked into this repo.
 
 To test the jig with an Anserini image using default parameters, try:
 
-```
+```bash
 python run.py prepare \
     --repo osirrc2019/anserini \
     --collections [name]=[path]=[format] ...
@@ -26,7 +25,7 @@ python run.py prepare \
 
 then
 
-```
+```bash
 python run.py search \
     --repo osirrc2019/anserini \
     --collection [name] \
@@ -47,10 +46,17 @@ The full command line parameters are below.
 
 To run a container (from a saved image) that you can interact with, try:
 
-```
+```bash
 python run.py interact \
     --repo osirrc2019/anserini \
     --tag latest
+```
+
+## MSMARCO
+
+If you're using `jig` for MSMARCO, download the evaluation script as follows:
+```bash
+wget https://raw.githubusercontent.com/dfcf93/MSMARCO/master/Ranking/Baselines/msmarco_eval.py
 ```
 
 ## Command Line Options
@@ -59,7 +65,9 @@ Options with `none` as the default are required.
 
 ### Command Line Options - prepare
 
-`python run.py prepare <options>`
+```bash
+python run.py prepare <options>
+```
 
 | Option Name | Type | Default | Example | Description
 | --- | --- | --- | --- | ---
@@ -72,7 +80,9 @@ Options with `none` as the default are required.
 
 ### Command Line Options - search
 
-`python run.py search <options>`
+```bash
+python run.py search <options>
+```
 
 | Option Name | Type | Default | Example | Description
 | --- | --- | --- | --- | ---
@@ -106,7 +116,7 @@ Each script is executed with the interpreter determined by the shebang so you ca
 ### init
 The purpose of the `init` hook is to do any preparation needed for the run - this could be downloading + compiling code, downloading a pre-built artifact, or downloading external resources (pre-trained models, knowledge graphs, etc.).
 
-The script will be executed as `./init --json <json>`  where the JSON string has the following format:
+The script will be executed as `./init <json>`  where the JSON string has the following format:
 ```json5
 {
   "version": "<version>" // the version string (i.e. commit id, version string, etc.)
@@ -118,7 +128,7 @@ The purpose of the `index` hook is to build the indexes required for the run.
 
 Before the hook is run, we will mount the document collections at a path passed to the script.
 
-The script will be executed as: `./index --json <json> ` where the JSON string has the following format:
+The script will be executed as: `./index <json> ` where the JSON string has the following format:
 
 ```json5
 {
@@ -141,7 +151,7 @@ The purpose of the `search` hook is to perform an ad-hoc retrieval run - multipl
 
 The run files are expected to be placed in the `/output` directory such that they can be evaluated externally by `jig` using `trec_eval`.
 
-The script will be executed as `./search --json <json>` where the JSON string has the following format:
+The script will be executed as `./search <json>` where the JSON string has the following format:
 ```json5
 {
   "collection": {
@@ -161,7 +171,7 @@ The script will be executed as `./search --json <json>` where the JSON string ha
 ### interact
 The purpose of the `interact` hook is to prepare for user interaction, assuming that any process started by `init` or `index` is gone.
 
-The script will be executed as `./interact --json <json>` where the JSON string has the following format:
+The script will be executed as `./interact <json>` where the JSON string has the following format:
 ```json5
 {
   "opts": { // extra options passed to the interact script
@@ -178,4 +188,4 @@ The script will be executed as `./interact --json <json>` where the JSON string 
 
 ## Notes
 
-Python 3.5 or higher is required to run `jig`.
+Python 3.6 or higher is required to run `jig`.

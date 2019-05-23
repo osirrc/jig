@@ -1,7 +1,10 @@
+import sys
+
 import json
 import os
 import subprocess
-import sys
+
+import util
 
 
 class Searcher:
@@ -12,7 +15,7 @@ class Searcher:
     def set_config(self, searcher_config):
         self.config = searcher_config
 
-    def search(self, client, output_path_guest, topic_path_host, topic_path_guest, generate_save_tag):
+    def search(self, client, collection_path_guest, output_path_guest, topic_path_host, topic_path_guest, generate_save_tag):
         """
         Runs the search and evaluates the results (run files placed into the /output directory) using trec_eval
         """
@@ -22,22 +25,44 @@ class Searcher:
         if not exists:
             sys.exit("Must prepare image first...")
 
-        volumes = {
-            os.path.abspath(self.config.output): {
-                "bind": output_path_guest,
-                "mode": "rw"
-            },
-            os.path.abspath(topic_path_host): {
-                "bind": topic_path_guest,
+        # List of 3-tuples (<name>, <path>, <format>)
+        collections = list(map(lambda x: x.split("="), self.config.collections))
+
+        # Ensure we have name, path, and format for each collection
+        if not all(len(collection) == 3 for collection in collections):
+            sys.exit("--collections must be in [name]=[path]=[format] form")
+
+        # Mapping from collection name to path on host
+        name_to_path_host = dict(map(lambda x: (x[0], x[1]), collections))
+
+        # Mapping from collection name to path in container
+        name_to_path_guest = dict(map(lambda name: (name, os.path.join(collection_path_guest, name)), name_to_path_host.keys()))
+
+        volumes = {}
+
+        for name in name_to_path_host.keys():
+            path_host, path_guest = os.path.abspath(name_to_path_host[name]), name_to_path_guest[name]
+            volumes[path_host] = {
+                "bind": path_guest,
                 "mode": "ro"
-            },
+            }
+
+        # Output path
+        volumes[os.path.abspath(self.config.output)] = {
+            "bind": output_path_guest,
+            "mode": "rw"
         }
 
+        # Topics path
+        volumes[os.path.abspath(topic_path_host)] = {
+            "bind": topic_path_guest,
+            "mode": "ro"
+        }
+
+        # Args for the search script
         search_args = {
-            "collection": {
-                "name": self.config.collection
-            },
-            "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
+            "collections": [{"name": name, "path": name_to_path_guest[name], "format": format} for (name, path, format) in collections],
+            "opts": util.build_opts(self.config.opts),
             "topic": {
                 "path": os.path.join(topic_path_guest, os.path.basename(self.config.topic)),
                 "format": self.config.topic_format
@@ -53,12 +78,26 @@ class Searcher:
         for line in container.logs(stream=True):
             print(str(line.decode('utf-8')), end="")
 
-        # The measure string passed to trec_eval
-        measures = " ".join(map(lambda x: "-m {}".format(x), self.config.measures))
+        if self.config.eval.lower() == "trec":
 
-        print("Evaluating results using trec_eval...")
-        for file in os.listdir(self.config.output):
-            run = os.path.join(self.config.output, file)
-            print("###\n# {}\n###".format(run))
-            subprocess.run("trec_eval/trec_eval {} {} {}".format(measures, self.config.qrels, run).split())
-            print()
+            # The measure string passed to trec_eval
+            measures = " ".join(map(lambda x: "-m {}".format(x), self.config.measures))
+
+            print("Evaluating results using trec_eval...")
+            for file in os.listdir(self.config.output):
+                run = os.path.join(self.config.output, file)
+                print("###\n# {}\n###".format(run))
+                subprocess.run("trec_eval/trec_eval {} {} {}".format(measures, self.config.qrels, run).split())
+                print()
+
+        elif self.config.eval.lower() == "msmarco":
+
+            from msmarco_eval import compute_metrics_from_files
+
+            for file in os.listdir(self.config.output):
+                run = os.path.join(self.config.output, file)
+                metrics = compute_metrics_from_files(self.config.qrels, run)
+                print('#####################')
+                for metric in sorted(metrics):
+                    print('{}: {}'.format(metric, metrics[metric]))
+                print('#####################')

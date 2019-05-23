@@ -1,7 +1,6 @@
+import docker
 import hashlib
 import os
-
-import docker
 
 from interactor import Interactor
 from preparer import Preparer
@@ -40,7 +39,7 @@ class Manager:
     def search(self, searcher_config=None):
         if searcher_config:
             self.set_searcher_config(searcher_config)
-        self.searcher.search(self.client, OUTPUT_PATH_GUEST, TOPIC_PATH_HOST, TOPIC_PATH_GUEST, self.generate_save_tag)
+        self.searcher.search(self.client, COLLECTION_PATH_GUEST, OUTPUT_PATH_GUEST, TOPIC_PATH_HOST, TOPIC_PATH_GUEST, self.generate_save_tag)
 
     def interact(self, interactor_config=None):
         if interactor_config:

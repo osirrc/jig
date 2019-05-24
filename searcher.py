@@ -12,8 +12,8 @@ class Searcher:
     def set_config(self, searcher_config):
         self.config = searcher_config
 
-    def search(self, client, output_path_guest, topic_path_host, topic_path_guest, test_split_path_guest,
-               generate_save_tag):
+    def search(self, client, output_path_guest, topic_path_host, topic_path_guest,
+               test_split_path_guest, generate_save_tag):
         """
         Runs the search and evaluates the results (run files placed into the /output directory) using trec_eval
         """
@@ -35,7 +35,8 @@ class Searcher:
         }
 
         if len(self.config.test_split) > 0:
-            volumes[self.config.test_split] = {"bind": test_split_path_guest, "mode": "ro"}
+            volumes[os.path.abspath(self.config.test_split)] = {
+                "bind": test_split_path_guest, "mode": "ro"}
 
         search_args = {
             "collection": {
@@ -51,7 +52,8 @@ class Searcher:
 
         print("Starting container from saved image...")
         container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
-                                          command="sh -c '/search --json {}'".format(json.dumps(json.dumps(search_args))),
+                                          command="sh -c '/search --json {}'".format(
+                                              json.dumps(json.dumps(search_args))),
                                           volumes=volumes, detach=True, publish_all_ports=True)
 
         print("Logs for search in container with ID {}...".format(container.id))

@@ -13,8 +13,8 @@ class Trainer:
     def set_config(self, trainer_config):
         self.config = trainer_config
 
-    def train(self, client, topic_path_guest, test_split_path_guest, validation_split_path_guest,
-              generate_save_tag):
+    def train(self, client, topic_path_guest, test_split_path_guest,
+              validation_split_path_guest, generate_save_tag):
         """
         Performs training
         """
@@ -25,30 +25,29 @@ class Trainer:
             sys.exit("Must prepare image first...")
 
         volumes = {
-            os.path.abspath(self.config.topic): {
-                "bind": os.path.join(topic_path_guest, os.path.basename(self.config.topic)),
-                "mode": "ro"
-            },
-
             self.config.model_folder: {
                 "bind": MODELS_GUEST_PATH,
                 "mode": "rw"
             },
-
-            self.config.qrels: {
+            os.path.abspath(self.config.topic): {
+                "bind": os.path.join(topic_path_guest, os.path.basename(self.config.topic)),
+                "mode": "ro"
+            },
+            os.path.abspath(self.config.qrels): {
                 "bind": QRELS_GUEST_PATH,
                 "mode": "ro"
             },
 
-            self.config.test_split: {
+            os.path.abspath(self.config.test_split): {
                 "bind": test_split_path_guest,
                 "mode": "ro"
             },
 
-            self.config.validation_split: {
+            os.path.abspath(self.config.validation_split): {
                 "bind": validation_split_path_guest,
                 "mode": "ro"
             }
+
         }
 
         train_args = {

@@ -4,9 +4,6 @@
 # Configuration
 ###
 
-# The path of the Azure CLI executable
-AZURE_CMD="/home/ryan/.bin/az"
-
 # The name of the Azure Managed Disk storing the collections
 DISK_NAME="collections"
 
@@ -20,21 +17,29 @@ RESOURCE_GROUP="jig"
 SSH_PUBKEY_PATH="~/.ssh/id_rsa.pub"
 
 # The VM name
-VM_NAME="jig-vm"
+VM_NAME="jig"
+
+# The VM size (https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes-general)
+VM_SIZE="Standard_D64s_v3"
 
 ###
 # Running
 ###
 
+if [[ -z ${IMAGE_FILE} ]]; then
+    echo "Usage: ./azure.sh <file.json>"
+    exit 1
+fi
+
 # Login to Azure
-${AZURE_CMD} login
+az login
 
 # Create the VM
-${AZURE_CMD} vm create \
+az vm create \
     --resource-group ${RESOURCE_GROUP} \
     --name ${VM_NAME} \
     --image UbuntuLTS \
-    --size Standard_B8ms \
+    --size ${VM_SIZE} \
     --attach-data-disks ${DISK_NAME} \
     --admin-username jig \
     --ssh-key-value ${SSH_PUBKEY_PATH}
@@ -43,7 +48,7 @@ ${AZURE_CMD} vm create \
 IP_ADDRESS=$(az vm list-ip-addresses --resource-group ${RESOURCE_GROUP} --name ${VM_NAME} --query "[].virtualMachine.network.publicIpAddresses[].ipAddress[]" -o tsv)
 
 # Setup jig
-ssh jig@${IP_ADDRESS} << EOF
+ssh -o "ConnectTimeout 300" -o "StrictHostKeyChecking no" jig@${IP_ADDRESS} << EOF
 
     mkdir collections
     sudo mount /dev/sdc1 collections

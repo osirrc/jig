@@ -1,6 +1,9 @@
 # OSIRRC 2019 Jig
 
+This is the jig for the [SIGIR 2019 Open-Source IR Replicability Challenge (OSIRRC 2019)](https://osirrc.github.io/osirrc2019/). Check out the [OSIRRC 2019 image library](https://github.com/osirrc/osirrc2019-library) for a list of images that have been contributed to this exercise.
+
 What's a [jig](https://en.wikipedia.org/wiki/Jig_(tool))?
+
 
 To get started, download + compile `trec_eval` with the following:
 
@@ -210,12 +213,6 @@ The script will be executed as `./interact --json <json>` where the JSON string 
 ```
 
 Note: If you need a port accessible, ensure you `EXPOSE` the port in your `Dockerfile`.
-
-## Reference Images
-
-+ Anserini: [[code](https://github.com/osirrc2019/anserini-docker)] [[Docker Hub](https://hub.docker.com/r/rclancy/anserini-test)]
-+ Terrier: [[code](https://github.com/osirrc2019/terrier-docker)]
-+ PISA: [[code](https://github.com/osirrc2019/pisa-docker)] [[Docker Hub](https://hub.docker.com/r/pisa/pisa-osirrc2019)]
 
 ## Azure Script
 

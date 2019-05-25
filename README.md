@@ -217,6 +217,13 @@ Note: If you need a port accessible, ensure you `EXPOSE` the port in your `Docke
 + Terrier: [[code](https://github.com/osirrc2019/terrier-docker)]
 + PISA: [[code](https://github.com/osirrc2019/pisa-docker)] [[Docker Hub](https://hub.docker.com/r/pisa/pisa-osirrc2019)]
 
+## Azure Script
+
+Run the script as follows:
+`./azure.sh --disk-name <disk_name> --resource-group <group> --vm-name <vm_name> --vm-size <vm_size> --run-file <file.json> --ssh-pubkey-path <path> --subscription <id>`
+
+The runs are defined in a JSON file, see `azure.json` as an example. Values in `[]` (i.e., `[COLLECTION_PATH]`) are replaced with the appropriate values defined in the file.
+
 ## Notes
 
 Python 3.5 or higher is required to run `jig`.

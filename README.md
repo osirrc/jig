@@ -182,7 +182,7 @@ Note: If you need a port accessible, ensure you `EXPOSE` the port in your `Docke
 Run the script as follows:
 `./azure.sh --disk-name <disk_name> --resource-group <group> --vm-name <vm_name> --vm-size <vm_size> --run-file <file.json> --ssh-pubkey-path <path> --subscription <id>`
 
-The runs are defined in a JSON file, see `azure.json` as an example. Each image can be added to the array, where values in `[]` are replaced with the appropriate values.
+The runs are defined in a JSON file, see `azure.json` as an example. Values in `[]` (i.e., `[COLLECTION_PATH]`) are replaced with the appropriate values defined in the file.
 
 ## Notes
 

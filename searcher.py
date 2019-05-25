@@ -52,8 +52,7 @@ class Searcher:
 
         print("Starting container from saved image...")
         container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
-                                          command="sh -c '/search --json {}'".format(
-                                              json.dumps(json.dumps(search_args))),
+                                          command="sh -c '/search --json {}'".format(json.dumps(json.dumps(search_args))),
                                           volumes=volumes, detach=True, publish_all_ports=True)
 
         print("Logs for search in container with ID {}...".format(container.id))

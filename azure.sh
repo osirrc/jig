@@ -7,14 +7,17 @@
 # The name of the Azure Managed Disk storing the collections
 DISK_NAME="collections"
 
-# The JSON file with image information
-IMAGE_FILE=$1
-
 # The Azure Resource Group
 RESOURCE_GROUP="jig"
 
+# The JSON file with run information
+RUN_FILE="azure.json"
+
 # The path to your local SSH public key for the admin user
 SSH_PUBKEY_PATH="~/.ssh/id_rsa.pub"
+
+# The Azure subscription
+SUBSCRIPTION=""
 
 # The VM name
 VM_NAME="jig"
@@ -26,13 +29,43 @@ VM_SIZE="Standard_D64s_v3"
 # Running
 ###
 
-if [[ -z ${IMAGE_FILE} ]]; then
-    echo "Usage: ./azure.sh <file.json>"
-    exit 1
-fi
+#!/bin/bash
+
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+      --disk-name)
+        DISK_NAME="$2";
+        shift;;
+      --resource-group)
+        RESOURCE_GROUP="$2";
+        shift;;
+      --run-file)
+        RUN_FILE="$2";
+        shift;;
+      --ssh-pubkey-path)
+        SSH_PUBKEY_PATH="$2";
+        shift;;
+      --subscription)
+        SUBSCRIPTION="$2";
+        shift;;
+      --vm-name)
+        VM_NAME="$2";
+        shift;;
+      --vm-size)
+        VM_SIZE="$2";
+        shift;;
+      *)
+        echo "Unknown parameter passed: $1";
+        exit 1;;
+    esac;
+    shift;
+done
 
 # Login to Azure
 az login
+
+# Set the subscription
+az account set --subscription ${SUBSCRIPTION}
 
 # Create the VM
 az vm create \
@@ -71,36 +104,42 @@ ssh -o "ConnectTimeout 300" -o "StrictHostKeyChecking no" jig@${IP_ADDRESS} << E
 EOF
 
 # The collection name, path, and format
-COLLECTION_NAME=$(cat ${IMAGE_FILE} | jq -r ".collection.name")
-COLLECTION_PATH=$(cat ${IMAGE_FILE} | jq -r ".collection.path")
-COLLECTION_FORMAT=$(cat ${IMAGE_FILE} | jq -r ".collection.format")
+COLLECTION_NAME=$(cat ${RUN_FILE} | jq -r ".collection.name")
+COLLECTION_PATH=$(cat ${RUN_FILE} | jq -r ".collection.path")
+COLLECTION_FORMAT=$(cat ${RUN_FILE} | jq -r ".collection.format")
+
+# The output directory
+OUTPUT=$(cat ${RUN_FILE} | jq -r ".output")
 
 # Path for topic and qrels
-TOPIC_PATH=$(cat ${IMAGE_FILE} | jq -r ".topic.path")
-QRELS_PATH=$(cat ${IMAGE_FILE} | jq -r ".qrels.path")
+TOPIC_PATH=$(cat ${RUN_FILE} | jq -r ".topic.path")
+QRELS_PATH=$(cat ${RUN_FILE} | jq -r ".qrels.path")
 
 # The number of images
-NUM_IMAGES=$(cat ${IMAGE_FILE} | jq -r '.images | length')
+NUM_IMAGES=$(cat ${RUN_FILE} | jq -r '.images | length')
 
 for i in $(seq 0 $((${NUM_IMAGES} - 1))); do
 
     # Get the search command and substitute in variables
-    PREPARE=$(cat ${IMAGE_FILE} | jq -r ".images[$i].command.prepare")
+    PREPARE=$(cat ${RUN_FILE} | jq -r ".images[$i].command.prepare")
     PREPARE=${PREPARE/"[COLLECTION_NAME]"/${COLLECTION_NAME}}
     PREPARE=${PREPARE/"[COLLECTION_PATH]"/${COLLECTION_PATH}}
     PREPARE=${PREPARE/"[COLLECTION_FORMAT]"/${COLLECTION_FORMAT}}
 
     # Get the search command and substitute in variables
-    SEARCH=$(cat ${IMAGE_FILE} | jq -r ".images[$i].command.search")
+    SEARCH=$(cat ${RUN_FILE} | jq -r ".images[$i].command.search")
     SEARCH=${SEARCH/"[COLLECTION_NAME]"/${COLLECTION_NAME}}
     SEARCH=${SEARCH/"[TOPIC_PATH]"/${TOPIC_PATH}}
     SEARCH=${SEARCH/"[QRELS_PATH]"/${QRELS_PATH}}
+    SEARCH=${SEARCH/"[OUTPUT]"/${OUTPUT}}
 
     echo ${PREPARE}
     ssh jig@${IP_ADDRESS} "cd jig && source venv/bin/activate && eval ${PREPARE}"
 
     echo ${SEARCH}
     ssh jig@${IP_ADDRESS} "cd jig && source venv/bin/activate && eval ${SEARCH}"
+
+    scp -r jig@${IP_ADDRESS}:${OUTPUT} .
 
 done
 

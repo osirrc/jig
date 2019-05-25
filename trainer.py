@@ -25,7 +25,7 @@ class Trainer:
             sys.exit("Must prepare image first...")
 
         volumes = {
-            self.config.model_folder: {
+            os.path.abspath(self.config.model_folder): {
                 "bind": MODELS_GUEST_PATH,
                 "mode": "rw"
             },

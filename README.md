@@ -5,7 +5,7 @@ This is the jig for the [SIGIR 2019 Open-Source IR Replicability Challenge (OSIR
 What's a [jig](https://en.wikipedia.org/wiki/Jig_(tool))?
 
 
-To get started, download + compile `trec_eval` with the following:
+To get started, clone the jig, and then download + compile `trec_eval` with the following command:
 
 ```
 git clone https://github.com/usnistgov/trec_eval.git && make -C trec_eval
@@ -16,6 +16,7 @@ Make sure the Docker Python package is installed (via pip, conda, etc.):
 pip install -r requirements.txt
 ```
 
+Make sure the Docker daemon is running.
 
 For common test collections, [topics](topics/) and [qrels](qrels/) are already checked into this repo.
 

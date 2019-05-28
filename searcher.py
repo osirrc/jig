@@ -1,9 +1,9 @@
 import json
 import os
+import re
 import subprocess
 import sys
-import re
-import time
+
 
 class Searcher:
 
@@ -31,7 +31,7 @@ class Searcher:
             os.path.abspath(topic_path_host): {
                 "bind": topic_path_guest,
                 "mode": "ro"
-            },
+            }
         }
 
         search_args = {
@@ -46,24 +46,31 @@ class Searcher:
             "top_k": self.config.top_k
         }
 
-        # Duplicate first query
-        single_query_file = ''
-        with open(os.path.join(topic_path_host, os.path.basename(self.config.topic)), 'r') as file:
-            queries = file.read()
-            query_end = queries.find('</top>')
-            if query_end == -1:
-                sys.exit('Query format unknown...')
-            single_query = queries[:query_end+6]
-            single_query_file = os.path.splitext(os.path.basename(self.config.topic))[0] + '.single.txt'
-            out_file = open(os.path.join(topic_path_host, single_query_file), 'w')
-            out_file.write(single_query)
-            out_file.close()
+        # The search command
+        command = "sh -c '/search --json {}'"
 
-        # Time empty search
         if self.config.timings:
+
+            # The search command with timings
+            command = "sh -c 'time /search --json {}'"
+
+            # Duplicate first query
+            single_query_file = ''
+            with open(os.path.join(topic_path_host, os.path.basename(self.config.topic)), 'r') as file:
+                queries = file.read()
+                query_end = queries.find('</top>')
+                if query_end == -1:
+                    sys.exit('Query format unknown...')
+                single_query = queries[:query_end + 6]
+                single_query_file = os.path.splitext(os.path.basename(self.config.topic))[0] + '.single.txt'
+                out_file = open(os.path.join(topic_path_host, single_query_file), 'w')
+                out_file.write(single_query)
+                out_file.close()
+
+            # Time empty search
             search_args['topic']['path'] = os.path.join(topic_path_guest, single_query_file)
-            container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
-                                              command="sh -c 'if which bash; then bash -c '\\''time /search --json {0}'\\''; else time /search --json {0}; fi'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
+            container = client.containers.run("{}:{}".format(self.config.repo, save_tag), command.format(json.dumps(json.dumps(search_args))), volumes=volumes,
+                                              detach=True)
             load_times = []
             for line in container.logs(stream=True):
                 match = re.match('^(real|user|sys)\t*(.*)m(\s*)(.*)s$', line.decode('utf-8'))
@@ -73,12 +80,8 @@ class Searcher:
         # Time actual search
         search_args['topic']['path'] = os.path.join(topic_path_guest, os.path.basename(self.config.topic))
         print("Starting container from saved image...")
-        if self.config.timings:
-            container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
-                                              command="sh -c 'if which bash; then bash -c '\\''time /search --json {0}'\\''; else time /search --json {0}; fi'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
-        else:
-            container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
-                                              command="sh -c '/search --json {}'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
+        container = client.containers.run("{}:{}".format(self.config.repo, save_tag), command.format(json.dumps(json.dumps(search_args))), volumes=volumes,
+                                          detach=True)
 
         search_times = []
         print("Logs for search in container with ID {}...".format(container.id))

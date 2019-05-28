@@ -66,7 +66,7 @@ The following collections are supported:
 |  core17  |          https://catalog.ldc.upenn.edu/LDC2008T19         |
 |  core18  |             https://trec.nist.gov/data/wapost/            |
 |   cw09b  |           http://lemurproject.org/clueweb09.php/          |
-|  cw12b13 | http://lemurproject.org/clueweb12/ClueWeb12-CreateB13.php |
+|   cw12b  | http://lemurproject.org/clueweb12/ClueWeb12-CreateB13.php |
 |   gov2   | http://ir.dcs.gla.ac.uk/test_collections/gov2-summary.htm |
 | robust04 |           https://trec.nist.gov/data_disks.html           |
 

@@ -16,6 +16,7 @@ Make sure the Docker Python package is installed (via pip, conda, etc.):
 pip install -r requirements.txt
 ```
 
+Make sure the Docker daemon is running.
 
 For common test collections, [topics](topics/) and [qrels](qrels/) are already checked into this repo.
 

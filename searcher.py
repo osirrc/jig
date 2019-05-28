@@ -60,56 +60,63 @@ class Searcher:
             out_file.close()
 
         # Time empty search
-        search_args['topic']['path'] = os.path.join(topic_path_guest, single_query_file)
-
-        container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
-                                          command="sh -c 'if which bash; then bash -c '\\''time /search --json {0}'\\''; else time /search --json {0}; fi'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
-        load_times = []
-        for line in container.logs(stream=True):
-            match = re.match('^(real|user|sys)\t*(.*)m(\s*)(.*)s$', line.decode('utf-8'))
-            if match:
-                load_times.append(match)
+        if self.config.timings:
+            search_args['topic']['path'] = os.path.join(topic_path_guest, single_query_file)
+            container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
+                                              command="sh -c 'if which bash; then bash -c '\\''time /search --json {0}'\\''; else time /search --json {0}; fi'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
+            load_times = []
+            for line in container.logs(stream=True):
+                match = re.match('^(real|user|sys)\t*(.*)m(\s*)(.*)s$', line.decode('utf-8'))
+                if match:
+                    load_times.append(match)
 
         # Time actual search
         search_args['topic']['path'] = os.path.join(topic_path_guest, os.path.basename(self.config.topic))
         print("Starting container from saved image...")
-        container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
-                                          command="sh -c 'if which bash; then bash -c '\\''time /search --json {0}'\\''; else time /search --json {0}; fi'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
+        if self.config.timings:
+            container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
+                                              command="sh -c 'if which bash; then bash -c '\\''time /search --json {0}'\\''; else time /search --json {0}; fi'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
+        else:
+            container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
+                                              command="sh -c '/search --json {}'".format(json.dumps(json.dumps(search_args))), volumes=volumes, detach=True)
 
         search_times = []
         print("Logs for search in container with ID {}...".format(container.id))
         for line in container.logs(stream=True):
-            match = re.match('^(real|user|sys)\t*(.*)m(\s*)(.*)s$', line.decode('utf-8'))
-            if match:
-                search_times.append(match)
+            if self.config.timings:
+                match = re.match('^(real|user|sys)\t*(.*)m(\s*)(.*)s$', line.decode('utf-8'))
+                if match:
+                    search_times.append(match)
             print(str(line.decode('utf-8')), end="")
-        print()
 
-        print('**********')
-        print('Index load timing information')
-        print(load_times[0].group(0))
-        print(load_times[1].group(0))
-        print(load_times[2].group(0))
-        print()
+        if self.config.timings:
+            print()
 
-        print('**********')
-        print('Search timing information')
-        print(search_times[0].group(0))
-        print(search_times[1].group(0))
-        print(search_times[2].group(0))
-        print()
+            print('**********')
+            print('Index load timing information')
+            print(load_times[0].group(0))
+            print(load_times[1].group(0))
+            print(load_times[2].group(0))
+            print()
 
-        result_minutes = []
-        result_seconds = []
-        for i in range(len(load_times)):
-            result_minutes.append(int(search_times[i].group(2)) - int(load_times[i].group(2)))
-            result_seconds.append(float(search_times[i].group(4)) - float(load_times[i].group(4)))
-        print('**********')
-        print('Search timing less load')
-        print('real\t{}m{}{:.3f}s'.format(result_minutes[0], search_times[0].group(3), result_seconds[0]))
-        print('user\t{}m{}{:.3f}s'.format(result_minutes[1], search_times[0].group(3), result_seconds[1]))
-        print('sys\t{}m{}{:.3f}s'.format(result_minutes[2], search_times[0].group(3), result_seconds[2]))
-        print()
+            print('**********')
+            print('Search timing information')
+            print(search_times[0].group(0))
+            print(search_times[1].group(0))
+            print(search_times[2].group(0))
+            print()
+
+            result_minutes = []
+            result_seconds = []
+            for i in range(len(load_times)):
+                result_minutes.append(int(search_times[i].group(2)) - int(load_times[i].group(2)))
+                result_seconds.append(float(search_times[i].group(4)) - float(load_times[i].group(4)))
+            print('**********')
+            print('Search timing less load')
+            print('real\t{}m{}{:.3f}s'.format(result_minutes[0], search_times[0].group(3), result_seconds[0]))
+            print('user\t{}m{}{:.3f}s'.format(result_minutes[1], search_times[0].group(3), result_seconds[1]))
+            print('sys\t{}m{}{:.3f}s'.format(result_minutes[2], search_times[0].group(3), result_seconds[2]))
+            print()
 
         print("Evaluating results using trec_eval...")
         for file in os.listdir(self.config.output):

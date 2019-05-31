@@ -28,7 +28,6 @@ if __name__ == "__main__":
                                 help="used to determine the tag of the snapshotted image after indexing")
     parser_prepare.add_argument("--collections", required=True, nargs="+", help="the name of the collection")
     parser_prepare.add_argument("--opts", nargs="+", default="", type=str, help="the args passed to the index script")
-    parser_prepare.add_argument("--version", default="", type=str, help="the version string passed to the init script")
 
     # Specific to train
     trainer_prepare = parser_sub.add_parser("train")

@@ -144,7 +144,9 @@ The purpose of the `init` hook is to do any preparation needed for the run - thi
 The script will be executed as `./init --json <json>`  where the JSON string has the following format:
 ```json5
 {
-  "version": "<version>" // the version string (i.e. commit id, version string, etc.)
+  "opts": { // extra options passed to the index script
+      "<key>": "<value>"
+   }
 }
 ```
 

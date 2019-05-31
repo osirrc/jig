@@ -52,8 +52,7 @@ class Preparer:
             }
 
         init_args = {
-            "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
-            "version": self.config.version
+            "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)}
         }
 
         index_args = {

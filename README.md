@@ -144,7 +144,9 @@ The purpose of the `init` hook is to do any preparation needed for the run - thi
 The script will be executed as `./init --json <json>`  where the JSON string has the following format:
 ```json5
 {
-  "version": "<version>" // the version string (i.e. commit id, version string, etc.)
+  "opts": { // extra options passed to the init script
+      "<key>": "<value>"
+   }
 }
 ```
 
@@ -187,7 +189,7 @@ The script will be executed as: `./train --json <json> ` where the JSON string h
   "model_folder": {
     "path": "/output",  // the path (in the docker image) where the output model folder (passed to the jig) is mounted
   },
-  "opts": { // extra options passed to the index script
+  "opts": { // extra options passed to the train script
     "<key>": "<value>"
   },
 }

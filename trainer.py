@@ -42,12 +42,10 @@ class Trainer:
                 "bind": test_split_path_guest,
                 "mode": "ro"
             },
-
             os.path.abspath(self.config.validation_split): {
                 "bind": validation_split_path_guest,
                 "mode": "ro"
             }
-
         }
 
         train_args = {
@@ -56,9 +54,12 @@ class Trainer:
                 "path": os.path.join(topic_path_guest, os.path.basename(self.config.topic)),
                 "format": self.config.topic_format
             },
-            "qrels": {"path": QRELS_GUEST_PATH},
-            "model_folder": {"path": MODELS_GUEST_PATH}
-
+            "qrels": {
+                "path": QRELS_GUEST_PATH
+            },
+            "model_folder": {
+                "path": MODELS_GUEST_PATH
+            }
         }
 
         print("Starting container from saved image...")

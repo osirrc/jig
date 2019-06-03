@@ -57,7 +57,7 @@ class Searcher:
         if self.config.timings:
 
             # The search command with timings
-            command = "sh -c 'time /search --json {}'"
+            command = "sh -c 'time -p /search --json {}'"
 
             # Duplicate first query
             single_query_file = ''
@@ -78,7 +78,7 @@ class Searcher:
                                               detach=True)
             load_times = []
             for line in container.logs(stream=True):
-                match = re.match('^(real|user|sys)\t*(.*)m(\s*)(.*)s$', line.decode('utf-8'))
+                match = re.match('^(real|user|sys)\\s(.*)$', line.decode('utf-8'))
                 if match:
                     load_times.append(match)
 
@@ -92,7 +92,7 @@ class Searcher:
         print("Logs for search in container with ID {}...".format(container.id))
         for line in container.logs(stream=True):
             if self.config.timings:
-                match = re.match('^(real|user|sys)\t*(.*)m(\s*)(.*)s$', line.decode('utf-8'))
+                match = re.match('^(real|user|sys)\\s(.*)$', line.decode('utf-8'))
                 if match:
                     search_times.append(match)
             print(str(line.decode('utf-8')), end="")
@@ -114,16 +114,14 @@ class Searcher:
             print(search_times[2].group(0))
             print()
 
-            result_minutes = []
-            result_seconds = []
+            result = []
             for i in range(len(load_times)):
-                result_minutes.append(int(search_times[i].group(2)) - int(load_times[i].group(2)))
-                result_seconds.append(float(search_times[i].group(4)) - float(load_times[i].group(4)))
+                result.append(float(search_times[i].group(2)) - float(load_times[i].group(2)))
             print('**********')
             print('Search timing less load')
-            print('real\t{}m{}{:.3f}s'.format(result_minutes[0], search_times[0].group(3), result_seconds[0]))
-            print('user\t{}m{}{:.3f}s'.format(result_minutes[1], search_times[0].group(3), result_seconds[1]))
-            print('sys\t{}m{}{:.3f}s'.format(result_minutes[2], search_times[0].group(3), result_seconds[2]))
+            print('real {:.2f}'.format(result[0]))
+            print('user {:.2f}'.format(result[1]))
+            print('sys {:.2f}'.format(result[2]))
             print()
 
         print("Evaluating results using trec_eval...")

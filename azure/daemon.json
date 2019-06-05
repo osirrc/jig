@@ -1,0 +1,4 @@
+{
+  "data-root": "/mnt/docker-data",
+  "storage-driver": "overlay"
+}

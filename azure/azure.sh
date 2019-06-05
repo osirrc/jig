@@ -80,8 +80,11 @@ az vm create \
 # Get the IP address of the VM
 IP_ADDRESS=$(az vm list-ip-addresses --resource-group ${RESOURCE_GROUP} --name ${VM_NAME} --query "[].virtualMachine.network.publicIpAddresses[].ipAddress[]" -o tsv)
 
+# Copy over Docker daemon.json file
+scp -o StrictHostKeyChecking=accept-new daemon.json jig@${IP_ADDRESS}:/tmp
+
 # Setup jig
-ssh -o "ConnectTimeout 300" -o "StrictHostKeyChecking no" jig@${IP_ADDRESS} << EOF
+ssh jig@${IP_ADDRESS} << EOF
 
     mkdir collections
     sudo mount /dev/sdc1 collections
@@ -90,7 +93,8 @@ ssh -o "ConnectTimeout 300" -o "StrictHostKeyChecking no" jig@${IP_ADDRESS} << E
     sudo apt install -y build-essential docker.io git python3 virtualenv
 
     sudo addgroup jig docker
-    sudo systemctl start docker.service
+    sudo cp /tmp/daemon.json /etc/docker
+    sudo systemctl restart docker.service
 
     git clone https://github.com/osirrc2019/jig.git; cd jig
 

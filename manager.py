@@ -1,5 +1,4 @@
 import hashlib
-import os
 
 import docker
 
@@ -8,10 +7,8 @@ from preparer import Preparer
 from searcher import Searcher
 from trainer import Trainer
 
-TOPIC_PATH_HOST = os.path.abspath("topics")
-TOPIC_PATH_GUEST = "/input/topics/"
-
 COLLECTION_PATH_GUEST = "/input/collections/"
+TOPIC_PATH_GUEST = "/input/topics/"
 OUTPUT_PATH_GUEST = "/output"
 
 TEST_SPLIT_PATH_GUEST = '/data/splits/test_split.txt'
@@ -48,14 +45,12 @@ class Manager:
     def search(self, searcher_config=None):
         if searcher_config:
             self.set_searcher_config(searcher_config)
-        self.searcher.search(self.client, OUTPUT_PATH_GUEST, TOPIC_PATH_HOST, TOPIC_PATH_GUEST, TEST_SPLIT_PATH_GUEST,
-                             self.generate_save_tag)
+        self.searcher.search(self.client, OUTPUT_PATH_GUEST, TOPIC_PATH_GUEST, TEST_SPLIT_PATH_GUEST, self.generate_save_tag)
 
     def train(self, trainer_config=None):
         if trainer_config:
             self.set_trainer_config(trainer_config)
-        self.trainer.train(self.client, TOPIC_PATH_GUEST, TEST_SPLIT_PATH_GUEST, VALIDATION_SPLIT_PATH_GUEST,
-                           self.generate_save_tag)
+        self.trainer.train(self.client, TOPIC_PATH_GUEST, TEST_SPLIT_PATH_GUEST, VALIDATION_SPLIT_PATH_GUEST, self.generate_save_tag)
 
     def interact(self, interactor_config=None):
         if interactor_config:

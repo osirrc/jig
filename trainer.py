@@ -49,6 +49,9 @@ class Trainer:
         }
 
         train_args = {
+            "collection": {
+                "name": self.config.collection
+            },
             "opts": {key: value for (key, value) in map(lambda x: x.split("="), self.config.opts)},
             "topic": {
                 "path": os.path.join(topic_path_guest, os.path.basename(self.config.topic)),

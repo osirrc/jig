@@ -66,9 +66,14 @@ class Trainer:
         }
 
         print("Starting container from saved image...")
-        container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
-                                          command="sh -c '/train --json {}'".format(json.dumps(json.dumps(train_args))),
-                                          volumes=volumes, detach=True)
+        if self.config.gpu:
+            container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
+                                              command="sh -c '/train --json {}'".format(json.dumps(json.dumps(train_args))),
+                                              volumes=volumes, detach=True, runtime='nvidia')
+        else:
+            container = client.containers.run("{}:{}".format(self.config.repo, save_tag),
+                                              command="sh -c '/train --json {}'".format(json.dumps(json.dumps(train_args))),
+                                              volumes=volumes, detach=True)
 
         print("Logs for training in container with ID {}...".format(container.id))
         for line in container.logs(stream=True):

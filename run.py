@@ -50,6 +50,8 @@ if __name__ == "__main__":
     trainer_prepare.add_argument("--qrels", required=True, type=str, help="the qrels file for model selection")
     trainer_prepare.add_argument("--opts", nargs="+", default="", type=str, help="the args passed to the index script")
     trainer_prepare.add_argument("--version", default="", type=str, help="the version string passed to the init script")
+    trainer_prepare.add_argument("--gpu", default=False, type=bool, help="Boolean to enable the use of the gpu on supported docker images (i.e., albep/nvsm_gpu)")
+
 
     # Specific to search
     parser_search = parser_sub.add_parser("search")
@@ -69,6 +71,7 @@ if __name__ == "__main__":
                                help="the subset of topic ids to use for testing")
     parser_search.add_argument("--opts", nargs="+", default="", type=str, help="the args passed to the search script")
     parser_search.add_argument("--timings", action="store_true", help="enable timing information to be printed")
+    parser_search.add_argument("--gpu", default=False, type=bool, help="Boolean to enable the use of the gpu on supported docker images (i.e., albep/nvsm_gpu)")
 
     # Specific to interact
     parser_interact = parser_sub.add_parser("interact")

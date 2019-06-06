@@ -74,8 +74,13 @@ class Searcher:
 
             # Time empty search
             search_args['topic']['path'] = os.path.join(topic_path_guest, single_query_file)
-            container = client.containers.run("{}:{}".format(self.config.repo, save_tag), command.format(json.dumps(json.dumps(search_args))), volumes=volumes,
+            if self.config.gpu:
+                container = client.containers.run("{}:{}".format(self.config.repo, save_tag), command.format(json.dumps(json.dumps(search_args))), volumes=volumes,
+                                              detach=True, runtime='nvidia')
+            else:
+                container = client.containers.run("{}:{}".format(self.config.repo, save_tag), command.format(json.dumps(json.dumps(search_args))), volumes=volumes,
                                               detach=True)
+
             load_times = []
             for line in container.logs(stream=True):
                 match = re.match('^(real|user|sys)\\s(.*)$', line.decode('utf-8'))
@@ -85,7 +90,12 @@ class Searcher:
         # Time actual search
         search_args['topic']['path'] = os.path.join(topic_path_guest, os.path.basename(self.config.topic))
         print("Starting container from saved image...")
-        container = client.containers.run("{}:{}".format(self.config.repo, save_tag), command.format(json.dumps(json.dumps(search_args))), volumes=volumes,
+
+        if self.config.gpu:
+            container = client.containers.run("{}:{}".format(self.config.repo, save_tag), command.format(json.dumps(json.dumps(search_args))), volumes=volumes,
+                                          detach=True, runtime='nvidia')
+        else:
+            container = client.containers.run("{}:{}".format(self.config.repo, save_tag), command.format(json.dumps(json.dumps(search_args))), volumes=volumes,
                                           detach=True)
 
         search_times = []

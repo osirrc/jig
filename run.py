@@ -37,6 +37,7 @@ if __name__ == "__main__":
     trainer_prepare.add_argument("--load_from_snapshot", default="save", type=str,
                                  help="used to determine the tag of the snapshotted image to train from")
     trainer_prepare.add_argument("--topic", required=True, type=str, help="the topic file for search")
+    trainer_prepare.add_argument("--collection", required=True, help="the name of the collection for train")
     trainer_prepare.add_argument("--topic_format", default="trec", type=str, help="the topic file format for training")
     trainer_prepare.add_argument("--save_to_snapshot", default="save", type=str,
                                  help="used to determine the tag of the snapshotted image after indexing")

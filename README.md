@@ -116,8 +116,8 @@ Options with `none` as the default are required.
 | `--load_from_snapshot` | `string` | `save` | `--load_from_snapshot robust04-exp1` | used to determine the tag of the snapshotted image to search from
 | `--topic` | `string` | `none` | `--topic topics/topics.robust04.301-450.601-700.txt` | the path of the topic file
 | `--topic_format` | `string` | `trec` | `--topic_format trec` | the format of the topic file
-| `--test_split` | `string` | `none` | `--test_split $(pwd)/sample_training_validation_query_ids/robust04/test.txt` | the path to the file with the query ids to use for testing (the docker image is expected to compute the training topic ids which will include all topic ids excluding the ones passed in the test and validation ids files)
-| `--validation_split` | `string` | `none` | `--validation_split $(pwd)/sample_training_validation_query_ids/robust04/validation.txt` | the path to the file with the query ids to use for the model validation (the docker image is expected to compute the training topic ids which will include all topic ids excluding the ones passed in the test and validation ids files)
+| `--test_split` | `string` | `none` | `--test_split $(pwd)/sample_training_validation_query_ids/robust04_test.txt` | the path to the file with the query ids to use for testing (the docker image is expected to compute the training topic ids which will include all topic ids excluding the ones passed in the test and validation ids files)
+| `--validation_split` | `string` | `none` | `--validation_split $(pwd)/sample_training_validation_query_ids/robust04_validation.txt` | the path to the file with the query ids to use for the model validation (the docker image is expected to compute the training topic ids which will include all topic ids excluding the ones passed in the test and validation ids files)
 | `--model_folder` | `string` | `none` | `--model_folder $(pwd)/output` | the folder to save the model trained by the docker
 | `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
 | `--opts` | `[key]=[value] ...` | `none` | `--opts epochs=10` | extra options passed to the search script

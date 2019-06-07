@@ -103,7 +103,7 @@ Options with `none` as the default are required.
 | `--output` | `string` | `none` | `--output $(pwd)/output` | the output path for run files
 | `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
 | `--opts` | `[key]=[value] ...` | `none` | `--opts search_args="-bm25"` | extra options passed to the search script
-| `--timings` | `flag` | `false` | `--timings` | print timing info (requires `time` package installed in Dockerfile)
+| `--timings` | `flag` | `false` | `--timings` | print timing info (requires the `time` package, or `bash`, to be installed in Dockerfile)
 
 ### Command Line Options - train
 
@@ -217,7 +217,7 @@ The script will be executed as `./search --json <json>` where the JSON string ha
 }
 ```
 
-Note: If you're using the `--timings` option for the `search` hook, ensure that the `time` package (not `bash` time command), is installed in your `Dockerfile`.
+Note: If you're using the `--timings` option for the `search` hook, ensure that the `time` package (or `bash`) is installed in your `Dockerfile`.
 
 ### interact
 The purpose of the `interact` hook is to prepare for user interaction, assuming that any process started by `init` or `index` is gone.

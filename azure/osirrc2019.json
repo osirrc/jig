@@ -27,6 +27,20 @@
       }
     },
     {
+      "name": "ielab",
+      "command": {
+        "prepare": "python3 run.py prepare --repo osirrc2019/ielab --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": "python3 run.py search --repo osirrc2019/ielab --collection [COLLECTION_NAME] --topic [TOPIC_PATH] --output [OUTPUT]/ielab --qrels [QRELS_PATH]"
+      }
+    },
+    {
+      "name": "irc-centre2019",
+      "command": {
+        "prepare": "python3 run.py prepare --repo osirrc2019/irc-centre2019 --collections core17=/home/jig/collections/disk45=trectext robust04=/home/jig/collections/disk45=trectext robust05=/home/jig/collections/disk45=trectext --opts run=\"wcrobust04\"",
+        "search": "python3 run.py search --repo osirrc2019/irc-centre2019 --collection [COLLECTION_NAME] --topic [TOPIC_PATH] --output [OUTPUT]/ielab --qrels [QRELS_PATH]"
+      }
+    },
+    {
       "name": "jass",
       "command": {
         "prepare": "python3 run.py prepare --repo osirrc2019/jass --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
@@ -52,6 +66,13 @@
       "command": {
         "prepare": "python3 run.py prepare --repo osirrc2019/pisa --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
         "search": "python3 run.py search --repo osirrc2019/pisa --collection [COLLECTION_NAME] --topic [TOPIC_PATH] --output [OUTPUT]/pisa --qrels [QRELS_PATH]"
+      }
+    },
+    {
+      "name": "terrier",
+      "command": {
+        "prepare": "python3 run.py prepare --repo osirrc2019/terrier --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": "python3 run.py search --repo osirrc2019/terrier --collection [COLLECTION_NAME] --topic [TOPIC_PATH] --output [OUTPUT]/terrier --qrels [QRELS_PATH]"
       }
     }
   ]

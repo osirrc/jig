@@ -104,6 +104,7 @@ Options with `none` as the default are required.
 | `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
 | `--opts` | `[key]=[value] ...` | `none` | `--opts search_args="-bm25"` | extra options passed to the search script
 | `--timings` | `flag` | `false` | `--timings` | print timing info (requires the `time` package, or `bash`, to be installed in Dockerfile)
+| `--measures` | `string ...` | `"map P.30"` | `--measures recall.1000 map` | the measures for trec_eval
 
 ### Command Line Options - train
 

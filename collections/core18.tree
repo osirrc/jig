@@ -1,0 +1,11 @@
+WashingtonPost.v2/
+├── MD5SUMS
+├── README.md
+├── data
+│   └── TREC_Washington_Post_collection.v2.jl
+└── scripts
+    ├── wapo-docids-dupes
+    ├── wapo-print-docids.py
+    └── wapo-remove-exact-duplicates.py
+
+2 directories, 6 files

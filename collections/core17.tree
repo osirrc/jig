@@ -1,0 +1,313 @@
+NYTcorpus/
+├── data
+│   ├── 1987
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1988
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1989
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1990
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1991
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1992
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1993
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1994
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1995
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1996
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1997
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1998
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 1999
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 2000
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 2001
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 2002
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 2003
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 2004
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 2005
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   ├── 2006
+│   │   ├── 01.tgz
+│   │   ├── 02.tgz
+│   │   ├── 03.tgz
+│   │   ├── 04.tgz
+│   │   ├── 05.tgz
+│   │   ├── 06.tgz
+│   │   ├── 07.tgz
+│   │   ├── 08.tgz
+│   │   ├── 09.tgz
+│   │   ├── 10.tgz
+│   │   ├── 11.tgz
+│   │   └── 12.tgz
+│   └── 2007
+│       ├── 01.tgz
+│       ├── 02.tgz
+│       ├── 03.tgz
+│       ├── 04.tgz
+│       ├── 05.tgz
+│       └── 06.tgz
+├── docs
+│   ├── README
+│   ├── file.tbl
+│   ├── new_york_times_annotated_corpus.pdf
+│   └── nyt_corpus_overview.pdf
+├── dtd
+│   ├── nitf-3-3-ruby-include.dtd
+│   ├── nitf-3-3.dtd
+│   └── xhtml-ruby-1.mod
+├── index.html
+└── tools
+    ├── APACHE-LICENSE-2.0.txt
+    ├── build
+    │   └── timestools.jar
+    ├── build.xml
+    ├── docs
+    │   ├── allclasses-frame.html
+    │   ├── allclasses-noframe.html
+    │   ├── com
+    │   │   └── nytlabs
+    │   │       └── corpus
+    │   │           ├── NYTCorpusDocument.html
+    │   │           ├── NYTCorpusDocumentParser.html
+    │   │           ├── package-frame.html
+    │   │           ├── package-summary.html
+    │   │           └── package-tree.html
+    │   ├── constant-values.html
+    │   ├── deprecated-list.html
+    │   ├── help-doc.html
+    │   ├── index-all.html
+    │   ├── index.html
+    │   ├── overview-tree.html
+    │   ├── package-list
+    │   ├── resources
+    │   │   └── inherit.gif
+    │   └── stylesheet.css
+    └── src
+        └── com
+            └── nytlabs
+                └── corpus
+                    ├── NYTCorpusDocument.java
+                    └── NYTCorpusDocumentParser.java
+
+35 directories, 275 files

@@ -1,4 +1,5 @@
 # OSIRRC 2019 Jig
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3246803.svg)](https://doi.org/10.5281/zenodo.3246803)
 
 This is the jig for the [SIGIR 2019 Open-Source IR Replicability Challenge (OSIRRC 2019)](https://osirrc.github.io/osirrc2019/). Check out the [OSIRRC 2019 image library](https://github.com/osirrc/osirrc2019-library) for a list of images that have been contributed to this exercise.
 

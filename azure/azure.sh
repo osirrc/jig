@@ -61,51 +61,51 @@ while [[ "$#" -gt 0 ]]; do
     shift;
 done
 
-## Login to Azure
-#az login
-#
-## Set the subscription
-#az account set --subscription ${SUBSCRIPTION}
-#
-## Create the VM
-#az vm create \
-#    --resource-group ${RESOURCE_GROUP} \
-#    --name ${VM_NAME} \
-#    --image UbuntuLTS \
-#    --size ${VM_SIZE} \
-#    --attach-data-disks ${DISK_NAME} \
-#    --admin-username jig \
-#    --ssh-key-value ${SSH_PUBKEY_PATH}
+# Login to Azure
+az login
+
+# Set the subscription
+az account set --subscription ${SUBSCRIPTION}
+
+# Create the VM
+az vm create \
+    --resource-group ${RESOURCE_GROUP} \
+    --name ${VM_NAME} \
+    --image UbuntuLTS \
+    --size ${VM_SIZE} \
+    --attach-data-disks ${DISK_NAME} \
+    --admin-username jig \
+    --ssh-key-value ${SSH_PUBKEY_PATH}
 
 # Get the IP address of the VM
 IP_ADDRESS=$(az vm list-ip-addresses --resource-group ${RESOURCE_GROUP} --name ${VM_NAME} --query "[].virtualMachine.network.publicIpAddresses[].ipAddress[]" -o tsv)
 
-## Copy over Docker daemon.json file
-#scp -o StrictHostKeyChecking=accept-new daemon.json jig@${IP_ADDRESS}:/tmp
-#
-## Setup jig
-#ssh jig@${IP_ADDRESS} << EOF
-#
-#    mkdir collections
-#    sudo mount /dev/sdc1 collections
-#
-#    sudo apt update
-#    sudo apt install -y build-essential docker.io git python3 virtualenv
-#
-#    sudo addgroup jig docker
-#    sudo cp /tmp/daemon.json /etc/docker
-#    sudo systemctl restart docker.service
-#
-#    git clone https://github.com/osirrc2019/jig.git; cd jig
-#
-#    virtualenv -p /usr/bin/python3 venv
-#
-#    source venv/bin/activate
-#    pip install -r requirements.txt
-#
-#    git clone https://github.com/usnistgov/trec_eval.git && make -C trec_eval
-#
-#EOF
+# Copy over Docker daemon.json file
+scp -o StrictHostKeyChecking=accept-new daemon.json jig@${IP_ADDRESS}:/tmp
+
+# Setup jig
+ssh jig@${IP_ADDRESS} << EOF
+
+    mkdir collections
+    sudo mount /dev/sdc1 collections
+
+    sudo apt update
+    sudo apt install -y build-essential docker.io git python3 virtualenv
+
+    sudo addgroup jig docker
+    sudo cp /tmp/daemon.json /etc/docker
+    sudo systemctl restart docker.service
+
+    git clone https://github.com/osirrc2019/jig.git; cd jig
+
+    virtualenv -p /usr/bin/python3 venv
+
+    source venv/bin/activate
+    pip install -r requirements.txt
+
+    git clone https://github.com/usnistgov/trec_eval.git && make -C trec_eval
+
+EOF
 
 # The collection name, path, and format
 COLLECTION_NAME=$(cat ${RUN_FILE} | jq -r ".collection.name")
@@ -153,4 +153,4 @@ for i in $(seq 0 $((${NUM_IMAGES} - 1))); do
 
 done
 
-#az vm delete --resource-group ${RESOURCE_GROUP} --name ${VM_NAME}
+az vm delete --resource-group ${RESOURCE_GROUP} --name ${VM_NAME}

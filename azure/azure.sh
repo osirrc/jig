@@ -98,6 +98,7 @@ ssh jig@${IP_ADDRESS} << EOF
 
     git clone https://github.com/osirrc2019/jig.git; cd jig
 
+    mkdir logs
     virtualenv -p /usr/bin/python3 venv
 
     source venv/bin/activate
@@ -124,6 +125,8 @@ NUM_IMAGES=$(cat ${RUN_FILE} | jq -r ".images | length")
 
 for i in $(seq 0 $((${NUM_IMAGES} - 1))); do
 
+    NAME=$(cat ${RUN_FILE} | jq -r ".images[$i].name")
+
     # Get the search command and substitute in variables
     PREPARE=$(cat ${RUN_FILE} | jq -r ".images[$i].command.prepare")
     PREPARE=${PREPARE/"[COLLECTION_NAME]"/${COLLECTION_NAME}}
@@ -131,7 +134,7 @@ for i in $(seq 0 $((${NUM_IMAGES} - 1))); do
     PREPARE=${PREPARE/"[COLLECTION_FORMAT]"/${COLLECTION_FORMAT}}
 
     echo ${PREPARE}
-    ssh jig@${IP_ADDRESS} "cd jig && source venv/bin/activate && ${PREPARE}"
+    ssh jig@${IP_ADDRESS} "cd jig && source venv/bin/activate && ${PREPARE} > logs/${NAME}-${COLLECTION_NAME}-prepare.log"
 
     NUM_SEARCHES=$(cat ${RUN_FILE} | jq -r ".images[$i].command.search | length")
 
@@ -145,11 +148,12 @@ for i in $(seq 0 $((${NUM_IMAGES} - 1))); do
         SEARCH=${SEARCH/"[OUTPUT]"/${OUTPUT}}
 
         echo ${SEARCH}
-        ssh jig@${IP_ADDRESS} "cd jig && source venv/bin/activate && ${SEARCH}"
+        ssh jig@${IP_ADDRESS} "cd jig && source venv/bin/activate && ${SEARCH} > logs/${NAME}-${COLLECTION_NAME}-search-${j}.log"
 
     done
 
     scp -r jig@${IP_ADDRESS}:${OUTPUT} .
+    scp -r jig@${IP_ADDRESS}:/home/jig/jig/logs .
 
 done
 

@@ -1,4 +1,5 @@
 # OSIRRC 2019 Jig
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3246803.svg)](https://doi.org/10.5281/zenodo.3246803)
 
 This is the jig for the [SIGIR 2019 Open-Source IR Replicability Challenge (OSIRRC 2019)](https://osirrc.github.io/osirrc2019/). Check out the [OSIRRC 2019 image library](https://github.com/osirrc/osirrc2019-library) for a list of images that have been contributed to this exercise.
 
@@ -104,7 +105,7 @@ Options with `none` as the default are required.
 | `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
 | `--opts` | `[key]=[value] ...` | `none` | `--opts search_args="-bm25"` | extra options passed to the search script
 | `--timings` | `flag` | `false` | `--timings` | print timing info (requires the `time` package, or `bash`, to be installed in Dockerfile)
-| `--measures` | `string ...` | `"map P.30"` | `--measures recall.1000 map` | the measures for trec_eval
+| `--measures` | `string ...` | `"num_q map P.30"` | `--measures recall.1000 map` | the measures for trec_eval
 
 ### Command Line Options - train
 

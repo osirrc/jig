@@ -53,7 +53,7 @@
         "prepare": "python run.py prepare --repo osirrc2019/indri --tag v0.1.0 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
         "search": [
           "python run.py search --repo osirrc2019/indri --tag v0.1.0 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.dir1000.title\" rule=\"method:dirichlet,mu:1000\" topic_type=\"title\" use_prf=\"0\"",
-          "python run.py search --repo osirrc2019/indri --tag v0.1.0 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.dir1000.title.prf\" rule=\"method:dirichlet,mu:1000\" topic_type=\"title\" use_prf=\"1",
+          "python run.py search --repo osirrc2019/indri --tag v0.1.0 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.dir1000.title.prf\" rule=\"method:dirichlet,mu:1000\" topic_type=\"title\" use_prf=\"1\"",
           "python run.py search --repo osirrc2019/indri --tag v0.1.0 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.jm0.5.title\" rule=\"method:linear,collectionLambda:0.5\" topic_type=\"title\" use_prf=\"0\"",
           "python run.py search --repo osirrc2019/indri --tag v0.1.0 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.bm25.title\" rule=\"okapi,k1:1.2,b:0.75,k3:7\" topic_type=\"title\" use_prf=\"0\"",
           "python run.py search --repo osirrc2019/indri --tag v0.1.0 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.bm25.desc\" rule=\"okapi\" topic_type=\"desc\" use_prf=\"0\""
@@ -99,9 +99,9 @@
     {
       "name": "pisa",
       "command": {
-        "prepare": "python run.py prepare --repo osirrc2019/pisa --tag v0.1.0 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "prepare": "python run.py prepare --repo osirrc2019/pisa --tag v0.1.2 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
         "search": [
-          "python run.py search --repo osirrc2019/pisa --tag v0.1.0 --output [OUTPUT]/pisa --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings"
+          "python run.py search --repo osirrc2019/pisa --tag v0.1.2 --output [OUTPUT]/pisa --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings"
         ]
       }
     },
@@ -118,7 +118,7 @@
       }
     },
     {
-      "name": "terrier",
+      "name": "terrier-dfrd",
       "command": {
         "prepare": "python run.py prepare --repo osirrc2019/terrier --tag v0.1.5 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT] --opts block.index=true",
         "search": [

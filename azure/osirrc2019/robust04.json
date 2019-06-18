@@ -42,8 +42,8 @@
         "search": [
           "python run.py search --repo osirrc2019/birch --tag v0.1.0 --output [OUTPUT]/birch --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --measures map P.20 --opts experiment=qa_2cv num_folds=2 anserini_path=anserini tune_params=False",
           "python run.py search --repo osirrc2019/birch --tag v0.1.0 --output [OUTPUT]/birch --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --measures map P.20 --opts experiment=mb_2cv num_folds=2 anserini_path=anserini tune_params=False",
-          "python run.py search --repo osirrc2019/birch --tag v0.1.0 --output [OUTPUT]/birch --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --measures map P.20 --opts experiment=qa_5cv num_folds=2 anserini_path=anserini tune_params=False",
-          "python run.py search --repo osirrc2019/birch --tag v0.1.0 --output [OUTPUT]/birch --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --measures map P.20 --opts experiment=mb_5cv num_folds=2 anserini_path=anserini tune_params=False"
+          "python run.py search --repo osirrc2019/birch --tag v0.1.0 --output [OUTPUT]/birch --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --measures map P.20 --opts experiment=qa_5cv num_folds=5 anserini_path=anserini tune_params=False",
+          "python run.py search --repo osirrc2019/birch --tag v0.1.0 --output [OUTPUT]/birch --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --measures map P.20 --opts experiment=mb_5cv num_folds=5 anserini_path=anserini tune_params=False"
         ]
       }
     },
@@ -57,15 +57,6 @@
           "python run.py search --repo osirrc2019/indri --tag v0.1.0 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.jm0.5.title\" rule=\"method:linear,collectionLambda:0.5\" topic_type=\"title\" use_prf=\"0\"",
           "python run.py search --repo osirrc2019/indri --tag v0.1.0 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.bm25.title\" rule=\"okapi,k1:1.2,b:0.75,k3:7\" topic_type=\"title\" use_prf=\"0\"",
           "python run.py search --repo osirrc2019/indri --tag v0.1.0 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.bm25.desc\" rule=\"okapi\" topic_type=\"desc\" use_prf=\"0\""
-        ]
-      }
-    },
-    {
-      "name": "irc-centre2019",
-      "command": {
-        "prepare": "python run.py prepare --repo osirrc2019/irc-centre2019 --tag v0.1.3 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT] core17=/home/jig/collections/NYTcorpus --opts run=\"wcrobust04\"",
-        "search": [
-          "python run.py search --repo osirrc2019/irc-centre2019 --tag v0.1.3 --output [OUTPUT]/irc-centre2019 --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME]"
         ]
       }
     },

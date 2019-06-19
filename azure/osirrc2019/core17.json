@@ -36,9 +36,18 @@
       }
     },
     {
-      "name": "irc-centre2019",
+      "name": "irc-centre2019-wcrobust04",
       "command": {
         "prepare": "python run.py prepare --repo osirrc2019/irc-centre2019 --tag v0.1.3 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT] robust04=/home/jig/collections/disk45=trectext --opts run=\"wcrobust04\"",
+        "search": [
+          "python run.py search --repo osirrc2019/irc-centre2019 --tag v0.1.3 --output [OUTPUT]/irc-centre2019 --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME]"
+        ]
+      }
+    },
+    {
+      "name": "irc-centre2019-wcrobust0405",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/irc-centre2019 --tag v0.1.3 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT] robust04=/home/jig/collections/disk45=trectext robust05=/home/jig/collections/disk45=trectext --opts run=\"wcrobust0405\"",
         "search": [
           "python run.py search --repo osirrc2019/irc-centre2019 --tag v0.1.3 --output [OUTPUT]/irc-centre2019 --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME]"
         ]

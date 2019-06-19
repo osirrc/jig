@@ -38,21 +38,20 @@
     {
       "name": "terrier",
       "command": {
-        "prepare": "python run.py prepare --repo osirrc2019/terrier --tag v0.1.5 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "prepare": "python run.py prepare --repo osirrc2019/terrier --tag v0.1.7 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
         "search": [
-          "python run.py search --repo osirrc2019/terrier --tag v0.1.5 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings",
-          "python run.py search --repo osirrc2019/terrier --tag v0.1.5 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=bm25_qe",
-          "python run.py search --repo osirrc2019/terrier --tag v0.1.5 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=pl2",
-          "python run.py search --repo osirrc2019/terrier --tag v0.1.5 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=pl2_qe"
-        ]
-      }
-    },
-    {
-      "name": "terrier-dfrd",
-      "command": {
-        "prepare": "python run.py prepare --repo osirrc2019/terrier --tag v0.1.5 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT] --opts block.index=true",
-        "search": [
-          "python run.py search --repo osirrc2019/terrier --tag v0.1.5 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=DFRD"
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=bm25",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=bm25_qe",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=bm25_prox",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=bm25_prox_qe",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=pl2",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=pl2_qe",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=pl2_prox",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=pl2_prox_qe",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=dph",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=dph_qe",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=dph_prox",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=dph_prox_qe"
         ]
       }
     }

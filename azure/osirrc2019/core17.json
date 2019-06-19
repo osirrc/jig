@@ -13,29 +13,6 @@
   "output": "/tmp/output",
   "images": [
     {
-      "name": "anserini",
-      "command": {
-        "prepare": "python run.py prepare --repo osirrc2019/anserini --tag v0.1.1 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
-        "search": [
-          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"bm25.run\" search_args=\"-bm25\"",
-          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"bm25.rm3.run\" search_args=\"-bm25 -rm3\"",
-          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"bm25.ax.run\" search_args=\"-bm25 -axiom -rerankCutoff 20 -axiom.deterministic\"",
-          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"ql.run\" search_args=\"-ql\"",
-          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"ql.rm3.run\" search_args=\"-ql -rm3\"",
-          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"ql.ax.run\" search_args=\"-ql -axiom -rerankCutoff 20 -axiom.deterministic\""
-        ]
-      }
-    },
-    {
-      "name": "atire",
-      "command": {
-        "prepare": "python run.py prepare --repo osirrc2019/atire --tag 0.1.0 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
-        "search": [
-          "python run.py search --repo osirrc2019/atire --tag 0.1.0 --output [OUTPUT]/atire --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --top_k 100 --timings"
-        ]
-      }
-    },
-    {
       "name": "irc-centre2019-wcrobust04",
       "command": {
         "prepare": "python run.py prepare --repo osirrc2019/irc-centre2019 --tag v0.1.3 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT] robust04=/home/jig/collections/disk45=trectext --opts run=\"wcrobust04\"",
@@ -50,33 +27,6 @@
         "prepare": "python run.py prepare --repo osirrc2019/irc-centre2019 --tag v0.1.3 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT] robust04=/home/jig/collections/disk45=trectext robust05=/home/jig/collections/disk45=trectext --opts run=\"wcrobust0405\"",
         "search": [
           "python run.py search --repo osirrc2019/irc-centre2019 --tag v0.1.3 --output [OUTPUT]/irc-centre2019 --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME]"
-        ]
-      }
-    },
-    {
-      "name": "jass",
-      "command": {
-        "prepare": "python run.py prepare --repo osirrc2019/jass --tag 0.1.0 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
-        "search": [
-          "python run.py search --repo osirrc2019/jass --tag 0.1.0 --output [OUTPUT]/jass --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --top_k 100 --timings"
-        ]
-      }
-    },
-    {
-      "name": "jassv2",
-      "command": {
-        "prepare": "python run.py prepare --repo osirrc2019/jassv2 --tag 0.1.0 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
-        "search": [
-          "python run.py search --repo osirrc2019/jassv2 --tag 0.1.0 --output [OUTPUT]/jassv2 --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --top_k 100 --timings"
-        ]
-      }
-    },
-    {
-      "name": "pisa",
-      "command": {
-        "prepare": "python run.py prepare --repo osirrc2019/pisa --tag v0.1.2 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
-        "search": [
-          "python run.py search --repo osirrc2019/pisa --tag v0.1.2 --output [OUTPUT]/pisa --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings"
         ]
       }
     }

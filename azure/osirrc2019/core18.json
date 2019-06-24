@@ -27,6 +27,15 @@
       }
     },
     {
+      "name": "ielab",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/ielab --tag v0.0.1 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/ielab --tag v0.0.1 --output [OUTPUT]/ielab --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME]"
+        ]
+      }
+    },
+    {
       "name": "pisa",
       "command": {
         "prepare": "python run.py prepare --repo osirrc2019/pisa --tag v0.1.2 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",

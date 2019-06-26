@@ -129,7 +129,7 @@ class Searcher:
             print()
 
         # The measure string passed to trec_eval
-        measures = " ".join(map(lambda x: "-m {}".format(x), self.config.measures))
+        measures = " ".join(map(lambda x: "-c -m {}".format(x), self.config.measures))
 
         print("Evaluating results using trec_eval...")
         for file in os.listdir(self.config.output):

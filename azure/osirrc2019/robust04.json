@@ -31,8 +31,8 @@
       "command": {
         "prepare": "python run.py prepare --repo osirrc2019/anserini-bm25prf --tag v0.2.2 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
         "search": [
-          "python run.py search --repo osirrc2019/anserini-bm25prf --tag v0.2.2 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings",
-          "python run.py search --repo osirrc2019/anserini-bm25prf --tag v0.2.2 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts k1=0.9 b=0.2 k1_prf=0.9 b_prf=0.6 num_new_terms=40 num_docs=10 new_term_weight=0.1 "
+          "python run.py search --repo osirrc2019/anserini-bm25prf --tag v0.2.2 --output [OUTPUT]/anserini-bm25prf --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings",
+          "python run.py search --repo osirrc2019/anserini-bm25prf --tag v0.2.2 --output [OUTPUT]/anserini-bm25prf --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts k1=0.9 b=0.2 k1_prf=0.9 b_prf=0.6 num_new_terms=40 num_docs=10 new_term_weight=0.1 "
         ]
       }
     },

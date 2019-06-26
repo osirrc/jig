@@ -60,7 +60,7 @@ if __name__ == "__main__":
     parser_search.add_argument("--test_split", required=False, default="", type=str, help="the subset of topic ids to use for testing")
     parser_search.add_argument("--opts", nargs="+", default="", type=str, help="the args passed to the search script")
     parser_search.add_argument("--timings", action="store_true", help="enable timing information to be printed")
-    parser_search.add_argument("--measures", nargs="+", default=["num_q", "map", "P.30"], type=str, help="the measures for trec_eval")
+    parser_search.add_argument("--measures", nargs="+", default=["num_q", "map", "P.30", "ndcg_cut.20"], type=str, help="the measures for trec_eval")
 
     # Specific to interact
     parser_interact = parser_sub.add_parser("interact")

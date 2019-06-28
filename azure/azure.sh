@@ -98,6 +98,7 @@ ssh jig@${IP_ADDRESS} << EOF
 
     git clone https://github.com/osirrc2019/jig.git; cd jig
 
+    mkdir logs
     virtualenv -p /usr/bin/python3 venv
 
     source venv/bin/activate
@@ -120,9 +121,11 @@ TOPIC_PATH=$(cat ${RUN_FILE} | jq -r ".topic.path")
 QRELS_PATH=$(cat ${RUN_FILE} | jq -r ".qrels.path")
 
 # The number of images
-NUM_IMAGES=$(cat ${RUN_FILE} | jq -r '.images | length')
+NUM_IMAGES=$(cat ${RUN_FILE} | jq -r ".images | length")
 
 for i in $(seq 0 $((${NUM_IMAGES} - 1))); do
+
+    NAME=$(cat ${RUN_FILE} | jq -r ".images[$i].name")
 
     # Get the search command and substitute in variables
     PREPARE=$(cat ${RUN_FILE} | jq -r ".images[$i].command.prepare")
@@ -130,20 +133,27 @@ for i in $(seq 0 $((${NUM_IMAGES} - 1))); do
     PREPARE=${PREPARE/"[COLLECTION_PATH]"/${COLLECTION_PATH}}
     PREPARE=${PREPARE/"[COLLECTION_FORMAT]"/${COLLECTION_FORMAT}}
 
-    # Get the search command and substitute in variables
-    SEARCH=$(cat ${RUN_FILE} | jq -r ".images[$i].command.search")
-    SEARCH=${SEARCH/"[COLLECTION_NAME]"/${COLLECTION_NAME}}
-    SEARCH=${SEARCH/"[TOPIC_PATH]"/${TOPIC_PATH}}
-    SEARCH=${SEARCH/"[QRELS_PATH]"/${QRELS_PATH}}
-    SEARCH=${SEARCH/"[OUTPUT]"/${OUTPUT}}
-
     echo ${PREPARE}
-    ssh jig@${IP_ADDRESS} "cd jig && source venv/bin/activate && eval ${PREPARE}"
+    ssh jig@${IP_ADDRESS} "cd jig && source venv/bin/activate && ${PREPARE} > logs/${NAME}-${COLLECTION_NAME}-prepare.log"
 
-    echo ${SEARCH}
-    ssh jig@${IP_ADDRESS} "cd jig && source venv/bin/activate && eval ${SEARCH}"
+    NUM_SEARCHES=$(cat ${RUN_FILE} | jq -r ".images[$i].command.search | length")
+
+    for j in $(seq 0 $((${NUM_SEARCHES} - 1))); do
+
+         # Get the search command and substitute in variables
+        SEARCH=$(cat ${RUN_FILE} | jq -r ".images[$i].command.search[$j]")
+        SEARCH=${SEARCH/"[COLLECTION_NAME]"/${COLLECTION_NAME}}
+        SEARCH=${SEARCH/"[TOPIC_PATH]"/${TOPIC_PATH}}
+        SEARCH=${SEARCH/"[QRELS_PATH]"/${QRELS_PATH}}
+        SEARCH=${SEARCH/"[OUTPUT]"/${OUTPUT}}
+
+        echo ${SEARCH}
+        ssh jig@${IP_ADDRESS} "cd jig && source venv/bin/activate && ${SEARCH} > logs/${NAME}-${COLLECTION_NAME}-search-${j}.log"
+
+    done
 
     scp -r jig@${IP_ADDRESS}:${OUTPUT} .
+    scp -r jig@${IP_ADDRESS}:/home/jig/jig/logs .
 
 done
 

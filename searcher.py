@@ -25,8 +25,12 @@ class Searcher:
 
         topic_path_host = os.path.dirname(os.path.abspath(self.config.topic))
 
+        output_path = os.path.abspath(self.config.output)
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
+
         volumes = {
-            os.path.abspath(self.config.output): {
+            output_path: {
                 "bind": output_path_guest,
                 "mode": "rw"
             },
@@ -129,7 +133,13 @@ class Searcher:
 
         print("Evaluating results using trec_eval...")
         for file in os.listdir(self.config.output):
-            run = os.path.join(self.config.output, file)
-            print("###\n# {}\n###".format(run))
-            subprocess.run("trec_eval/trec_eval {} {} {}".format(measures, self.config.qrels, run).split())
-            print()
+            if not file.endswith("trec_eval"):
+                run = os.path.join(self.config.output, file)
+                print("###\n# {}\n###".format(run))
+                try:
+                    result = subprocess.check_output("trec_eval/trec_eval {} {} {}".format(measures, self.config.qrels, run).split())
+                    print(result.decode("UTF-8"))
+                    with open("{}.trec_eval".format(run), "w+") as out:
+                        out.write(result.decode("UTF-8"))
+                except subprocess.CalledProcessError:
+                    print("Unable to evaluate {} - is it a run file?".format(run))

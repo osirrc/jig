@@ -62,7 +62,10 @@
       "command": {
         "prepare": "python run.py prepare --repo osirrc2019/galago --tag v0.0.2 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
         "search": [
-          "python run.py search --repo osirrc2019/galago --tag v0.0.2 --output [OUTPUT]/galago --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME]"
+          "python run.py search --repo osirrc2019/galago --tag v0.0.2 --output [OUTPUT]/galago --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"output_robust04.txt\" ",
+          "python run.py search --repo osirrc2019/galago --tag v0.0.2 --output [OUTPUT]/galago --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"output_robust04_mu_1000.txt\" search_options=\"mu:1000\"",
+          "python run.py search --repo osirrc2019/galago --tag v0.0.2 --output [OUTPUT]/galago --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"output_robust04_scorer_mb25.txt\" search_options=\"scorer:bm25\"",
+          "python run.py search --repo osirrc2019/galago --tag v0.0.2 --output [OUTPUT]/galago --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"output_robust04_operator_wrap_sdm.txt\" search_options=\"operatorWrap:sdm\""
         ]
       }
     },

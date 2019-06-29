@@ -58,6 +58,26 @@
       }
     },
     {
+      "name": "entityretrieval",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/entityretrieval --tag v0.1.1 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=lm threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8",
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=mlm-tc threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8",
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=mlm-all threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8",
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=prms threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8",
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=sdm threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8",
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=fsdm threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8",
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=lm_elr threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8",
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=mlm_elr threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8",
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=mlm-tc_elr threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8",
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=prms_elr threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8",
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=sdm_elr threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8",
+          "python run.py search --repo osirrc2019/entityretrieval --tag v0.1.1 --output [OUTPUT]/entityretrieval --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts model=fsdm_elr threshold=0.1 nfields=10 lambdas=0.1,0.05,0.05,0.8"
+        ]
+      }
+    },
+    {
       "name": "galago",
       "command": {
         "prepare": "python run.py prepare --repo osirrc2019/galago --tag v0.0.2 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",

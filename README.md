@@ -6,7 +6,7 @@ This is the jig for the [SIGIR 2019 Open-Source IR Replicability Challenge (OSIR
 What's a [jig](https://en.wikipedia.org/wiki/Jig_(tool))?
 
 
-To get started, clone the jig, and then download + compile `trec_eval` with the following command:
+To get started, clone the jig, and then download + compile `trec_eval` (inside the `jig` directory) with the following command:
 
 ```
 git clone https://github.com/usnistgov/trec_eval.git && make -C trec_eval

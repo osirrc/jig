@@ -1,11 +1,12 @@
 # OSIRRC 2019 Jig
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3246803.svg)](https://doi.org/10.5281/zenodo.3246803)
 
 This is the jig for the [SIGIR 2019 Open-Source IR Replicability Challenge (OSIRRC 2019)](https://osirrc.github.io/osirrc2019/). Check out the [OSIRRC 2019 image library](https://github.com/osirrc/osirrc2019-library) for a list of images that have been contributed to this exercise.
 
 What's a [jig](https://en.wikipedia.org/wiki/Jig_(tool))?
 
 
-To get started, clone the jig, and then download + compile `trec_eval` with the following command:
+To get started, clone the jig, and then download + compile `trec_eval` (inside the `jig` directory) with the following command:
 
 ```
 git clone https://github.com/usnistgov/trec_eval.git && make -C trec_eval
@@ -103,7 +104,8 @@ Options with `none` as the default are required.
 | `--output` | `string` | `none` | `--output $(pwd)/output` | the output path for run files
 | `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
 | `--opts` | `[key]=[value] ...` | `none` | `--opts search_args="-bm25"` | extra options passed to the search script
-| `--timings` | `flag` | `false` | `--timings` | print timing info (requires `time` command available in the image)
+| `--timings` | `flag` | `false` | `--timings` | print timing info (requires the `time` package, or `bash`, to be installed in Dockerfile)
+| `--measures` | `string ...` | `"num_q map P.30"` | `--measures recall.1000 map` | the measures for trec_eval
 
 ### Command Line Options - train
 
@@ -116,8 +118,8 @@ Options with `none` as the default are required.
 | `--load_from_snapshot` | `string` | `save` | `--load_from_snapshot robust04-exp1` | used to determine the tag of the snapshotted image to search from
 | `--topic` | `string` | `none` | `--topic topics/topics.robust04.301-450.601-700.txt` | the path of the topic file
 | `--topic_format` | `string` | `trec` | `--topic_format trec` | the format of the topic file
-| `--test_split` | `string` | `none` | `--test_split $(pwd)/sample_training_validation_query_ids/robust04/test.txt` | the path to the file with the query ids to use for testing (the docker image is expected to compute the training topic ids which will include all topic ids excluding the ones passed in the test and validation ids files)
-| `--validation_split` | `string` | `none` | `--validation_split $(pwd)/sample_training_validation_query_ids/robust04/validation.txt` | the path to the file with the query ids to use for the model validation (the docker image is expected to compute the training topic ids which will include all topic ids excluding the ones passed in the test and validation ids files)
+| `--test_split` | `string` | `none` | `--test_split $(pwd)/sample_training_validation_query_ids/robust04_test.txt` | the path to the file with the query ids to use for testing (the docker image is expected to compute the training topic ids which will include all topic ids excluding the ones passed in the test and validation ids files)
+| `--validation_split` | `string` | `none` | `--validation_split $(pwd)/sample_training_validation_query_ids/robust04_validation.txt` | the path to the file with the query ids to use for the model validation (the docker image is expected to compute the training topic ids which will include all topic ids excluding the ones passed in the test and validation ids files)
 | `--model_folder` | `string` | `none` | `--model_folder $(pwd)/output` | the folder to save the model trained by the docker
 | `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
 | `--opts` | `[key]=[value] ...` | `none` | `--opts epochs=10` | extra options passed to the search script
@@ -216,6 +218,8 @@ The script will be executed as `./search --json <json>` where the JSON string ha
   "top_k": <int>              // the num of retrieval results for top-k retrieval
 }
 ```
+
+Note: If you're using the `--timings` option for the `search` hook, ensure that the `time` package (or `bash`) is installed in your `Dockerfile`.
 
 ### interact
 The purpose of the `interact` hook is to prepare for user interaction, assuming that any process started by `init` or `index` is gone.

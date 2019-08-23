@@ -1,0 +1,159 @@
+{
+  "collection": {
+    "name": "robust04",
+    "path": "/home/jig/collections/disk45",
+    "format": "trectext"
+  },
+  "topic": {
+    "path": "topics/topics.robust04.txt"
+  },
+  "qrels": {
+    "path": "qrels/qrels.robust04.txt"
+  },
+  "output": "/tmp/output",
+  "images": [
+    {
+      "name": "anserini",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/anserini --tag v0.1.1 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"bm25.run\" search_args=\"-bm25\"",
+          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"bm25.rm3.run\" search_args=\"-bm25 -rm3\"",
+          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"bm25.ax.run\" search_args=\"-bm25 -axiom -rerankCutoff 20 -axiom.deterministic\"",
+          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"ql.run\" search_args=\"-ql\"",
+          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"ql.rm3.run\" search_args=\"-ql -rm3\"",
+          "python run.py search --repo osirrc2019/anserini --tag v0.1.1 --output [OUTPUT]/anserini --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts out_file_name=\"ql.ax.run\" search_args=\"-ql -axiom -rerankCutoff 20 -axiom.deterministic\""
+        ]
+      }
+    },
+    {
+      "name": "anserini-bm25prf",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/anserini-bm25prf --tag v0.2.2 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/anserini-bm25prf --tag v0.2.2 --output [OUTPUT]/anserini-bm25prf --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings",
+          "python run.py search --repo osirrc2019/anserini-bm25prf --tag v0.2.2 --output [OUTPUT]/anserini-bm25prf --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts k1=0.9 b=0.2 k1_prf=0.9 b_prf=0.6 num_new_terms=40 num_docs=10 new_term_weight=0.1 "
+        ]
+      }
+    },
+    {
+      "name": "atire",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/atire --tag v0.1.1 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/atire --tag v0.1.1 --output [OUTPUT]/atire --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --top_k 100 --timings"
+        ]
+      }
+    },
+    {
+      "name": "birch",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/birch --tag v0.1.0 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/birch --tag v0.1.0 --output [OUTPUT]/birch --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --measures map P.20 --opts experiment=qa_2cv num_folds=2 anserini_path=anserini tune_params=False",
+          "python run.py search --repo osirrc2019/birch --tag v0.1.0 --output [OUTPUT]/birch --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --measures map P.20 --opts experiment=mb_2cv num_folds=2 anserini_path=anserini tune_params=False",
+          "python run.py search --repo osirrc2019/birch --tag v0.1.0 --output [OUTPUT]/birch --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --measures map P.20 --opts experiment=qa_5cv num_folds=5 anserini_path=anserini tune_params=False",
+          "python run.py search --repo osirrc2019/birch --tag v0.1.0 --output [OUTPUT]/birch --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --measures map P.20 --opts experiment=mb_5cv num_folds=5 anserini_path=anserini tune_params=False"
+        ]
+      }
+    },
+    {
+      "name": "galago",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/galago --tag v0.0.2 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/galago --tag v0.0.2 --output [OUTPUT]/galago --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME]"
+        ]
+      }
+    },
+    {
+      "name": "ielab",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/ielab --tag v0.0.1 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/ielab --tag v0.0.1 --output [OUTPUT]/ielab --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME]"
+        ]
+      }
+    },
+    {
+      "name": "indri",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/indri --tag v0.2.1 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/indri --tag v0.2.1 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.dir1000.title\" rule=\"method:dirichlet,mu:1000\" topic_type=\"title\"",
+          "python run.py search --repo osirrc2019/indri --tag v0.2.1 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.dir1000.title.sd\" rule=\"method:dirichlet,mu:1000\" topic_type=\"title\" sd=\"1\"",
+          "python run.py search --repo osirrc2019/indri --tag v0.2.1 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.dir1000.title.prf\" rule=\"method:dirichlet,mu:1000\" topic_type=\"title\" use_prf=\"1\"",
+          "python run.py search --repo osirrc2019/indri --tag v0.2.1 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.dir1000.title.prf.sd\" rule=\"method:dirichlet,mu:1000\" topic_type=\"title\" use_prf=\"1\" sd=\"1\"",
+          "python run.py search --repo osirrc2019/indri --tag v0.2.1 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.jm0.5.title\" rule=\"method:linear,collectionLambda:0.5\" topic_type=\"title\"",
+          "python run.py search --repo osirrc2019/indri --tag v0.2.1 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.bm25.title\" rule=\"okapi,k1:1.2,b:0.75\" topic_type=\"title\"",
+          "python run.py search --repo osirrc2019/indri --tag v0.2.1 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.bm25.title.prf\" rule=\"okapi,k1:1.2,b:0.75\" topic_type=\"title\" use_prf=\"1\"",
+          "python run.py search --repo osirrc2019/indri --tag v0.2.1 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.bm25.title+desc\" rule=\"okapi,k1:1.2,b:0.75\" topic_type=\"title+desc\"",
+          "python run.py search --repo osirrc2019/indri --tag v0.2.1 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.bm25.title+desc.prf.sd\" rule=\"method:dirichlet,mu:1000\" topic_type=\"title+desc\" use_prf=\"1\" sd=\"1\"",
+          "python run.py search --repo osirrc2019/indri --tag v0.2.1 --output [OUTPUT]/indri --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"robust.dir1000.desc\" rule=\"method:dirichlet,mu:1000\" topic_type=\"desc\""
+        ]
+      }
+    },
+    {
+      "name": "jass",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/jass --tag v0.1.1 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/jass --tag v0.1.1 --output [OUTPUT]/jass --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --top_k 100 --timings"
+        ]
+      }
+    },
+    {
+      "name": "jassv2",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/jassv2 --tag v0.1.1 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/jassv2 --tag v0.1.1 --output [OUTPUT]/jassv2 --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --top_k 100 --timings"
+        ]
+      }
+    },
+    {
+      "name": "olddog",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/olddog --tag v1.0.0 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/olddog --tag v1.0.0 --output [OUTPUT]/olddog --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --opts out_file_name=\"run.bm25.robust04\""
+        ]
+      }
+    },
+    {
+      "name": "pisa",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/pisa --tag v0.1.3 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/pisa --tag v0.1.3 --output [OUTPUT]/pisa --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings"
+        ]
+      }
+    },
+    {
+      "name": "terrier",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/terrier --tag v0.1.7 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT]",
+        "search": [
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=bm25",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=bm25_qe",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=pl2",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=pl2_qe",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=dph",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=dph_qe"
+        ]
+      }
+    },
+    {
+      "name": "terrier-block",
+      "command": {
+        "prepare": "python run.py prepare --repo osirrc2019/terrier --tag v0.1.7 --collections [COLLECTION_NAME]=[COLLECTION_PATH]=[COLLECTION_FORMAT] --opts block.indexing=true",
+        "search": [
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=bm25_prox",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=bm25_prox_qe",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=dph_prox",
+          "python run.py search --repo osirrc2019/terrier --tag v0.1.7 --output [OUTPUT]/terrier --qrels [QRELS_PATH] --topic [TOPIC_PATH] --collection [COLLECTION_NAME] --timings --opts config=dph_prox_qe"
+        ]
+      }
+    }
+  ]
+}

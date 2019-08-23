@@ -25,8 +25,12 @@ class Searcher:
 
         topic_path_host = os.path.dirname(os.path.abspath(self.config.topic))
 
+        output_path = os.path.abspath(self.config.output)
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
+
         volumes = {
-            os.path.abspath(self.config.output): {
+            output_path: {
                 "bind": output_path_guest,
                 "mode": "rw"
             },
@@ -53,6 +57,7 @@ class Searcher:
 
         # The search command
         command = "sh -c '/search --json {}'"
+        runtime = "nvidia" if self.config.gpu else "runc"
 
         if self.config.timings:
 
@@ -75,7 +80,8 @@ class Searcher:
             # Time empty search
             search_args['topic']['path'] = os.path.join(topic_path_guest, single_query_file)
             container = client.containers.run("{}:{}".format(self.config.repo, save_tag), command.format(json.dumps(json.dumps(search_args))), volumes=volumes,
-                                              detach=True)
+                                              detach=True, runtime=runtime)
+
             load_times = []
             for line in container.logs(stream=True):
                 match = re.match('^(real|user|sys)\\s(.*)$', line.decode('utf-8'))
@@ -85,8 +91,9 @@ class Searcher:
         # Time actual search
         search_args['topic']['path'] = os.path.join(topic_path_guest, os.path.basename(self.config.topic))
         print("Starting container from saved image...")
+
         container = client.containers.run("{}:{}".format(self.config.repo, save_tag), command.format(json.dumps(json.dumps(search_args))), volumes=volumes,
-                                          detach=True)
+                                          detach=True, runtime=runtime)
 
         search_times = []
         print("Logs for search in container with ID {}...".format(container.id))
@@ -124,9 +131,18 @@ class Searcher:
             print('sys {:.2f}'.format(result[2]))
             print()
 
+        # The measure string passed to trec_eval
+        measures = " ".join(map(lambda x: "-c -m {}".format(x), self.config.measures))
+
         print("Evaluating results using trec_eval...")
         for file in os.listdir(self.config.output):
-            run = os.path.join(self.config.output, file)
-            print("###\n# {}\n###".format(run))
-            subprocess.run(["trec_eval/trec_eval", "-m", "map", "-m", "P.30", self.config.qrels, run])
-            print()
+            if not file.endswith("trec_eval"):
+                run = os.path.join(self.config.output, file)
+                print("###\n# {}\n###".format(run))
+                try:
+                    result = subprocess.check_output("trec_eval/trec_eval {} {} {}".format(measures, self.config.qrels, run).split())
+                    print(result.decode("UTF-8"))
+                    with open("{}.trec_eval".format(run), "w+") as out:
+                        out.write(result.decode("UTF-8"))
+                except subprocess.CalledProcessError:
+                    print("Unable to evaluate {} - is it a run file?".format(run))

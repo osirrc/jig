@@ -106,6 +106,7 @@ Options with `none` as the default are required.
 | `--opts` | `[key]=[value] ...` | `none` | `--opts search_args="-bm25"` | extra options passed to the search script
 | `--timings` | `flag` | `false` | `--timings` | print timing info (requires the `time` package, or `bash`, to be installed in Dockerfile)
 | `--measures` | `string ...` | `"num_q map P.30"` | `--measures recall.1000 map` | the measures for trec_eval
+| `--gpu` | `boolean` | `False` | `--gpu True` | flag to launch docker with nvidia runtime
 
 ### Command Line Options - train
 
@@ -122,6 +123,7 @@ Options with `none` as the default are required.
 | `--validation_split` | `string` | `none` | `--validation_split $(pwd)/sample_training_validation_query_ids/robust04_validation.txt` | the path to the file with the query ids to use for the model validation (the docker image is expected to compute the training topic ids which will include all topic ids excluding the ones passed in the test and validation ids files)
 | `--model_folder` | `string` | `none` | `--model_folder $(pwd)/output` | the folder to save the model trained by the docker
 | `--qrels` | `string` | `none` | `--qrels $(pwd)/qrels/qrels.robust2004.txt` | the qrels file for evaluation
+| `--gpu` | `boolean` | `False` | `--gpu True` | flag to launch docker with nvidia runtime
 | `--opts` | `[key]=[value] ...` | `none` | `--opts epochs=10` | extra options passed to the search script
 
 
@@ -245,3 +247,4 @@ The runs are defined in a JSON file, see `azure.json` as an example. Values in `
 ## Notes
 
 Python 3.5 or higher is required to run `jig`.
+Nvidia-docker is required to run images with gpu support, see https://github.com/NVIDIA/nvidia-docker for more details.
